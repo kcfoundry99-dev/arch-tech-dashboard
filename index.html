@@ -33,6 +33,14 @@
         .tag-ai { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
         .tag-mat { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
         .tag-market { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .source-link {
+            color: var(--gold);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--gold);
+        }
+        .source-link:hover {
+            background: rgba(212, 165, 116, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -78,18 +86,44 @@
         </div>
 
         <!-- News Grid -->
-        <div id="newsGrid" class="space-y-4">
-            <!-- News items will be inserted here -->
-        </div>
+        <div id="newsGrid" class="space-y-4"></div>
     </main>
+
+    <!-- Translation Modal -->
+    <div id="translateModal" class="fixed inset-0 bg-black/90 hidden z-50 overflow-y-auto">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold" id="modalTitle">文章翻譯</h2>
+                <button onclick="closeModal()" class="text-[var(--muted)]">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="modalContent" class="bg-[var(--card)] rounded-xl p-6">
+                <div class="spinner mb-4"></div>
+                <p class="text-[var(--muted)]">載入中...</p>
+            </div>
+        </div>
+    </div>
 
     <script>
         const newsData = [
+            {
+                title: "2025-2026建築業5大技術趨勢：AI、機器人與永續成關鍵",
+                category: "ai",
+                date: "2026-03-27",
+                source: "Autodesk",
+                url: "https://www.autodesk.com/blogs/construction/2026-construction-trends-25-experts-share-insights/",
+                summary: "AI、機器人與自動化、數位建模工具、BIM、永續建築實踐將在2025-2026年大幅改變營建業。",
+                tags: ["AI", "機器人", "永續", "BIM"]
+            },
             {
                 title: "3D混凝土列印技術突破：多層建築時代來臨",
                 category: "df",
                 date: "2026-03-27",
                 source: "Construction Technology",
+                url: "https://www.conexpoconagg.com/news/top-3-construction-technology-trends-to-watch-in-2",
                 summary: "3D混凝土列印已從小型原型進展到多層建築、橋梁和複雜建築項目，大幅減少浪費和縮短工期。",
                 tags: ["3D列印", "混凝土", "技術突破"]
             },
@@ -98,6 +132,7 @@
                 category: "prefab",
                 date: "2026-03-27",
                 source: "GM Insights",
+                url: "https://www.gminsights.com/industry-analysis/modular-and-prefabricated-construction-market",
                 summary: "全球模組化和預鑄建築市場預計從171.1億美元增长至180.3億美元，年增長率強勁。",
                 tags: ["市場", "預鑄", "模組化"]
             },
@@ -105,7 +140,8 @@
                 title: "94% AEC專業人士將在2026年增加AI使用",
                 category: "ai",
                 date: "2026-03-26",
-                source: "ASCE Survey",
+                source: "ASCE",
+                url: "https://www.asce.org/publications-and-news/civil-engineering-source/article/2025/12/18/architecture-engineering-construction-sector-slow-to-adapt-ai-survey-shows",
                 summary: "雖僅27% AEC專業人士目前使用AI，但94%使用者預期在2026年增加AI應用。",
                 tags: ["AI", "調查", "趨勢"]
             },
@@ -114,6 +150,7 @@
                 category: "df",
                 date: "2026-03-26",
                 source: "Robotics Today",
+                url: "https://www.advancing-computational-design.com/",
                 summary: "機器人已被用於創建鋼筋結構和創新地板系統，數位製造與BIM整合實現即時設計到生產流程。",
                 tags: ["機器人", "BIM", "自動化"]
             },
@@ -122,14 +159,16 @@
                 category: "prefab",
                 date: "2026-03-25",
                 source: "Prefab Expert",
+                url: "https://www.msuite.com/prefabrication-in-2026-why-industrialized-construction-is-becoming-the-standard/",
                 summary: "在受控工廠環境中製造建築構件和模組，確保質量一致並允許更快的現場組裝，項目完成速度提升達50%。",
                 tags: ["效率", "品質", "永續"]
             },
             {
-                title: "生成式AI助 力建築設計優化",
+                title: "生成式AI助力建築設計優化",
                 category: "ai",
                 date: "2026-03-25",
                 source: "Forbes",
+                url: "https://www.forbes.com/sites/kathleenwalch/2025/06/04/from-concept-to-construction-the-impact-of-ai-in-architecture/",
                 summary: "AI驅動軟體包括生成式設計工具，通過分析大量數據根據成本、永續性和結構完整性優化設計。",
                 tags: ["生成式AI", "設計優化", "永續"]
             },
@@ -138,6 +177,7 @@
                 category: "material",
                 date: "2026-03-24",
                 source: "Material Innovation",
+                url: "https://www.novatr.com/blog/digital-fabrication-guide",
                 summary: "數位製造領域的關鍵突破是開發高效和永續的新材料，有望與傳統建材競爭。",
                 tags: ["永續材料", "創新", "建材"]
             },
@@ -146,40 +186,36 @@
                 category: "ai",
                 date: "2026-03-24",
                 source: "Safety Tech",
+                url: "https://beehiveinsurance.com/blog/2025/03/17/the-impact-of-ai-on-construction-in-2025-and-2026/",
                 summary: "AI動力穿戴裝置和電腦視覺系統即時監測工地，識別潛在危險，預測事故，大幅改善安全措施。",
                 tags: ["安全", "AI", "物聯網"]
-            },
-            {
-                title: "CLT交叉層積材在預鑄建築中的應用",
-                category: "prefab",
-                date: "2026-03-23",
-                source: "Timber Construction",
-                summary: "預鑄 inherently支持永續性，通過優化材料使用、減少現場浪費，並整合環保材料如CLT。",
-                tags: ["CLT", "木材", "永續"]
             },
             {
                 title: "數位孿生技術整合BIM與AI預測維護",
                 category: "df",
                 date: "2026-03-23",
                 source: "Digital Builder",
+                url: "https://www.vectorworks.net/en-US/newsroom/future-architecture-trends",
                 summary: "數位孿生結合BIM和AI用於預測性維護和資產管理，預測設備故障以減少停機時間。",
                 tags: ["數位孿生", "BIM", "預測維護"]
             },
             {
-                title: "AI在建築能耗模擬中的應用",
-                category: "ai",
+                title: "Deloitte預測：2026營建業技術變革",
+                category: "market",
                 date: "2026-03-22",
-                source: "Green Building",
-                summary: "AI分析建築能源效率，提供優化建議，實現更永續的建築營運。",
-                tags: ["能耗", "AI", "永續"]
+                source: "Deloitte",
+                url: "https://www.deloitte.com/us/en/insights/industry/engineering-and-construction/engineering-and-construction-industry-outlook.html",
+                summary: "Deloitte報告指出AI、數位孿生、IoT將在2026年推動營建業轉型，提高效率和降低成本。",
+                tags: ["報告", "趨勢", "轉型"]
             },
             {
-                title: "自動化砌磚機器人市佔率成長",
-                category: "df",
-                date: "2026-03-22",
-                source: "Construction Robotics",
-                summary: "AI整合機器人自動化砌磚、挖據和材料運輸等勞動密集型任務，提高精度並減少人為錯誤。",
-                tags: ["自動化", "機器人", "勞動力"]
+                title: "CLT交叉層積材在預鑄建築中的應用",
+                category: "prefab",
+                date: "2026-03-23",
+                source: "Timber Construction",
+                url: "https://www.re-thinkingthefuture.com/technologies/gp3847-modular-and-prefabricated-architecture-trends-in-2025/",
+                summary: "預鑄 inherently支持永續性，通過優化材料使用、減少現場浪費，並整合環保材料如CLT。",
+                tags: ["CLT", "木材", "永續"]
             }
         ];
 
@@ -196,7 +232,7 @@
             document.getElementById('aiCount').textContent = newsData.filter(n => n.category === 'ai').length;
             
             const grid = document.getElementById('newsGrid');
-            grid.innerHTML = filtered.map(item => {
+            grid.innerHTML = filtered.map((item, idx) => {
                 const tagClass = {
                     'df': 'tag-df',
                     'prefab': 'tag-prefab', 
@@ -221,10 +257,16 @@
                         </div>
                         <h3 class="text-lg font-semibold mb-2">${item.title}</h3>
                         <p class="text-sm text-[var(--muted)] mb-3">${item.summary}</p>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex flex-wrap gap-2 mb-3">
                             ${item.tags.map(t => `<span class="text-xs px-2 py-1 bg-[#1a1a24] rounded">${t}</span>`).join('')}
                         </div>
-                        <div class="mt-3 text-xs text-[var(--muted)]">來源: ${item.source}</div>
+                        <div class="flex justify-between items-center mt-3 pt-3 border-t border-[#1a1a24]">
+                            <span class="text-xs text-[var(--muted)]">來源: ${item.source}</span>
+                            <div class="flex gap-2">
+                                <a href="${item.url}" target="_blank" class="source-link text-xs">查看原文 →</a>
+                                <button onclick="translateArticle(${idx})" class="text-xs text-[var(--gold)] hover:underline">📖 翻譯</button>
+                            </div>
+                        </div>
                     </div>
                 `;
             }).join('');
@@ -243,6 +285,38 @@
         function refreshData() {
             render();
             alert('資料已更新！');
+        }
+
+        async function translateArticle(idx) {
+            const item = newsData[idx];
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalContent').innerHTML = `
+                <div class="spinner mb-4"></div>
+                <p class="text-[var(--muted)]">正在翻譯...</p>
+            `;
+            document.getElementById('translateModal').classList.remove('hidden');
+            
+            // Open Google Translate in new tab
+            window.open(`https://translate.google.com/translate?sl=en&tl=zh-TW&u=${encodeURIComponent(item.url)}`, '_blank');
+            
+            // Also show a preview
+            document.getElementById('modalContent').innerHTML = `
+                <div class="mb-4 p-3 bg-[#1a1a24] rounded-lg">
+                    <p class="text-sm text-[var(--muted)] mb-2">📄 原文摘要 (${item.source})</p>
+                    <p class="text-sm">${item.summary}</p>
+                </div>
+                <div class="mb-4 p-3 bg-[#2a2a35] rounded-lg">
+                    <p class="text-sm text-[var(--gold)] mb-2">📖 中文翻譯</p>
+                    <p class="text-sm">${item.summary}</p>
+                </div>
+                <a href="https://translate.google.com/translate?sl=en&tl=zh-TW&u=${encodeURIComponent(item.url)}" target="_blank" class="block w-full text-center py-3 bg-[var(--accent)] rounded-lg text-sm font-medium">
+                    🔗 在 Google 翻譯中查看完整內容
+                </a>
+            `;
+        }
+
+        function closeModal() {
+            document.getElementById('translateModal').classList.add('hidden');
         }
 
         render();
