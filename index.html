@@ -33,6 +33,7 @@
         .tag-ai { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
         .tag-mat { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
         .tag-market { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .tag-lifestyle { background: rgba(236, 72, 153, 0.2); color: #ec4899; }
         .source-link {
             color: var(--gold);
             text-decoration: none;
@@ -87,6 +88,7 @@
                 <button onclick="filter('material')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="material">🧱 材料</button>
                 <button onclick="filter('market')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="market">📈 市場</button>
                 <button onclick="filter('sustainability')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="sustainability">🌱 永續</button>
+                <button onclick="filter('lifestyle')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="lifestyle">🏠 房產開發</button>
                 <button onclick="filter('safety')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="safety">🦺 安全</button>
                 <button onclick="filter('automation')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="automation">⚙️ 自動化</button>
                 <button onclick="filter('bim')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="bim">📐 BIM</button>
@@ -215,6 +217,70 @@
                 tags: ["報告", "趨勢", "轉型"],
                 source: "Deloitte", url: "https://www.deloitte.com/us/en/insights/industry/engineering-and-construction/engineering-and-construction-industry-outlook.html",
                 summary: "Deloitte報告指出AI、數位孿生、IoT將在2026年推動營建業轉型，提高效率和降低成本。", date: "2026-03-22"
+            },
+            // 房地產開發新模式 - Lifestyle
+            {
+                title: "One Beverly Hills - 17.5英畝超豪華生活社區",
+                category: "lifestyle",
+                tags: ["豪華住宅", "酒店式服務", "園林設計", "Aman"],
+                source: "Multi-Housing News", url: "https://www.multihousingnews.com/beverly-hills-mixed-use-development-gets-4-3b-in-financing/",
+                summary: "$100億美元項目，結合Aman酒店與住宅、-extensive園林設計，打造頂級生活體驗。2024動工，2025展開垂直開發。", date: "2026-03-27"
+            },
+            {
+                title: "West Edge - 洛杉矶獲獎混合用途社區",
+                category: "lifestyle",
+                tags: ["TOD", "LEED", "WELL認證", "獲獎"],
+                source: "LA Business Journal", url: "https://labusinessjournal.com/business-journal-events/2024-commercial-real-estate-awards-mixed-use/",
+                summary: "PCBC Gold Nugget Grand Prize獲獎項目，結合豪華住宅、辦公、零售與開放廣場，WELL Core & Shell認證。", date: "2026-03-26"
+            },
+            {
+                title: "The Dallas EDITION - 精品酒店與豪華住宅結合",
+                category: "lifestyle",
+                tags: ["酒店", "住宅", "豪華", "Katy Trail"],
+                source: "Dallas Innovates", url: "https://dallasinnovates.com/edition-hotel-residences-to-be-centerpiece-of-uptown-dallas-chalk-hill-development/",
+                summary: "五星級EDITION酒店+60戶豪華住宅，直接連接Katy Trail，標誌德州首個EDITION項目。", date: "2026-03-25"
+            },
+            {
+                title: "Nantou Hybrid Building - 深圳城市活化典範",
+                category: "lifestyle",
+                tags: ["城市更新", "Dezeen獲獎", "創新設計"],
+                source: "Dezeen Awards", url: "https://www.dezeen.com/awards/2024/winners/categories/architecture/mixed-use-project-of-the-year/",
+                summary: "Urbanus Architecture設計，榮獲2024 Dezeen「年度混合用途項目」，展現創新城市活化。", date: "2026-03-24"
+            },
+            {
+                title: "Knox & McKinney - 達拉斯精品辦公與零售",
+                category: "lifestyle",
+                tags: ["精品零售", "辦公", "hospitality"],
+                source: "Trammell Crow", url: "https://www.trammellcrow.com/newsroom/knox-street-enters-its-next-evolution-with-knox-and-mckinney",
+                summary: "2026年3月動工，精品辦公空間與精選零售餐飲，結合hospitality設施。", date: "2026-03-23"
+            },
+            {
+                title: "Shorehaven - 亞利桑那州大型規劃社區",
+                category: "lifestyle",
+                tags: ["住宅", "規劃社區", "室內外設施"],
+                source: "MegaProject", url: "https://megaproject.com/news/mixed-use/7-mixed-use-projects-to-watch-in-2025",
+                summary: "$18億South Pier總體規劃社區，722戶住宅，2026完工，結合室內外完善設施。", date: "2026-03-22"
+            },
+            {
+                title: "Sumou Towers - 沙烏地阿拉伯奢華地標",
+                category: "lifestyle",
+                tags: ["奢華", "地標", "獲獎"],
+                source: "Luxury Lifestyle Awards", url: "https://luxurylifestyleawards.com",
+                summary: "Asmou開發，榮獲2024 Luxury Lifestyle Awards「最佳奢華混合用途開發」。", date: "2026-03-21"
+            },
+            {
+                title: "Be Grand Reforma - 墨西哥城49層地標",
+                category: "lifestyle",
+                tags: ["住宅", "商業", "零售"],
+                source: "Luxury Lifestyle Awards", url: "https://luxurylifestyleawards.com",
+                summary: "2023年完工，49層混合用途建築，2024獲Luxury Lifestyle Awards肯定。", date: "2026-03-20"
+            },
+            {
+                title: "Willets Point - 紐約皇后區3億美元重建",
+                category: "lifestyle",
+                tags: ["都市更新", "社會住宅", "零售"],
+                source: "Multi Family Dive", url: "https://www.multifamilydive.com/news/mixed-use-projects-2025-new-york-city-north-carolina-houston-los-angeles/737318/",
+                summary: "Related Cos.投資$30億，首期含1100戶社會住宅與零售，重要都市更新項目。", date: "2026-03-19"
             }
         ];
 
@@ -266,7 +332,8 @@
                     'prefab': 'tag-prefab', 
                     'ai': 'tag-ai',
                     'material': 'tag-mat',
-                    'market': 'tag-market'
+                    'market': 'tag-market',
+                    'lifestyle': 'tag-lifestyle'
                 }[item.category];
                 
                 const catName = {
@@ -274,7 +341,8 @@
                     'prefab': '預鑄模組',
                     'ai': 'AI應用',
                     'material': '材料',
-                    'market': '市場'
+                    'market': '市場',
+                    'lifestyle': '🏠房產開發'
                 }[item.category];
                 
                 return `
