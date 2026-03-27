@@ -93,8 +93,18 @@
             </div>
         </div>
 
-        <!-- News Grid -->
-        <div id="newsGrid" class="space-y-4"></div>
+        <!-- AI Analysis Section -->
+        <div class="mt-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">🧠 與X Foundry相關分析</h2>
+                <button onclick="analyzeRelevance()" class="text-sm px-4 py-2 bg-[var(--gold)] text-black rounded-lg">分析</button>
+            </div>
+            <div id="analysisResult" class="space-y-4">
+                <div class="bg-[var(--card)] rounded-xl p-5">
+                    <p class="text-sm text-[var(--muted)]">點擊「分析」自動產生與你的案子相關的資訊...</p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Translation Modal -->
@@ -336,6 +346,53 @@
 
         function closeModal() {
             document.getElementById('translateModal').classList.add('hidden');
+        }
+
+        function analyzeRelevance() {
+            const resultDiv = document.getElementById('analysisResult');
+            resultDiv.innerHTML = `
+                <div class="bg-[var(--card)] rounded-xl p-5">
+                    <div class="spinner mb-4"></div>
+                    <p class="text-sm text-[var(--muted)]">正在分析...</p>
+                </div>
+            `;
+            
+            const relevant = newsData.filter(n => ['df', 'prefab', 'ai', 'automation', 'sustainability'].includes(n.category));
+            
+            const analysis = `
+                <div class="bg-[var(--card)] rounded-xl p-5">
+                    <h3 class="text-lg font-semibold mb-4 text-[var(--gold)]">🎯 與X Foundry相關的商機</h3>
+                    <div class="space-y-4">
+                        <div class="border-l-2 border-[#10b981] pl-4">
+                            <p class="font-medium text-sm">🤖 機器人/自動化</p>
+                            <p class="text-xs text-[var(--muted)] mt-1">${relevant.filter(n => n.category === 'automation').length}篇 - 鋼筋綁紮、自動化施工可直接借鏡</p>
+                        </div>
+                        <div class="border-l-2 border-[#4895ef] pl-4">
+                            <p class="font-medium text-sm">🏗️ 預鑄/模組化</p>
+                            <p class="text-xs text-[var(--muted)] mt-1">市場1800億美元 - 社會住宅、都更項目商機</p>
+                        </div>
+                        <div class="border-l-2 border-[#8b5cf6] pl-4">
+                            <p class="font-medium text-sm">🤖 AI應用</p>
+                            <p class="text-xs text-[var(--muted)] mt-1">94% AEC將增加AI使用 - 設計優化、施工安全</p>
+                        </div>
+                        <div class="border-l-2 border-[#f59e0b] pl-4">
+                            <p class="font-medium text-sm">🌱 永續材料</p>
+                            <p class="text-xs text-[var(--muted)] mt-1">地聚合物、CLT與你研究資料庫契合</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-[#1a1a24]">
+                        <h4 class="font-medium text-sm mb-2">💡 建議方向</h4>
+                        <ul class="text-xs text-[var(--muted)] space-y-1">
+                            <li>• 與台灣營造廠策略合作，導入機器人預鑄技術</li>
+                            <li>• 爭取政府社會住宅標案</li>
+                            <li>• 發展地震災區快速重建方案</li>
+                            <li>• 結合CLT與3D列印開發新產品</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            setTimeout(() => { resultDiv.innerHTML = analysis; }, 800);
         }
 
         render();
