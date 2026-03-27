@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X Foundry | 建築科技前沿</title>
+    <title>X Foundry | Architecture & Real Estate</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Outfit:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0f;
-            --card: #12121a;
-            --gold: #d4a574;
-            --text: #fff;
-            --muted: #6a6a7a;
-            --accent: #e63946;
+            --bg: #faf9f7;
+            --card: #ffffff;
+            --text: #1a1a1a;
+            --text-muted: #6b6b6b;
+            --gold: #b8956e;
+            --border: #e8e6e3;
         }
         body {
             font-family: 'Outfit', 'Noto Sans TC', sans-serif;
@@ -22,445 +22,173 @@
             color: var(--text);
             min-height: 100vh;
         }
-        .tag {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 500;
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        .btn-filter {
+            padding: 8px 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            font-size: 13px;
+            color: var(--text-muted);
+            transition: all 0.2s;
         }
-        .tag-df { background: rgba(72, 149, 239, 0.2); color: #4895ef; }
-        .tag-prefab { background: rgba(16, 185, 129, 0.2); color: #10b981; }
-        .tag-ai { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
-        .tag-mat { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
-        .tag-market { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
-        .tag-lifestyle { background: rgba(236, 72, 153, 0.2); color: #ec4899; }
-        .source-link {
+        .btn-filter:hover { border-color: var(--gold); color: var(--text); }
+        .btn-filter.active { background: var(--text); color: white; border-color: var(--text); }
+        
+        .card-article {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            transition: all 0.3s;
+        }
+        .card-article:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+        
+        .tag-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
             color: var(--gold);
-            text-decoration: none;
-            border-bottom: 1px dashed var(--gold);
-        }
-        .source-link:hover {
-            background: rgba(212, 165, 116, 0.1);
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
-    <header class="sticky top-0 bg-[#0a0a0f]/95 backdrop-blur-sm z-50 border-b border-[#1a1a24]">
-        <div class="max-w-6xl mx-auto px-5 py-4 flex justify-between items-center">
+    <header class="bg-white border-b border-[#e8e6e3] sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
             <div>
-                <h1 class="text-xl font-bold">X Foundry</h1>
-                <p class="text-xs text-[var(--muted)]">建築科技前沿 | 更新: <span id="lastUpdate">—</span></p>
+                <h1 class="font-serif text-2xl font-medium">X Foundry</h1>
+                <p class="text-xs text-[var(--text-muted)] mt-1">建築科技與房產前沿</p>
             </div>
-            <button onclick="refreshData()" class="text-sm px-4 py-2 bg-[var(--accent)] rounded-lg">更新資料</button>
+            <span class="text-xs text-[var(--text-muted)]" id="lastUpdate"></span>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-5 py-6">
+    <main class="max-w-6xl mx-auto px-6 py-8">
         <!-- Stats -->
-        <div class="grid grid-cols-4 gap-4 mb-8">
-            <div class="bg-[var(--card)] rounded-xl p-4 text-center">
-                <div class="text-2xl font-bold" id="totalNews">0</div>
-                <div class="text-xs text-[var(--muted)]">總文章</div>
+        <div class="grid grid-cols-4 gap-4 mb-10">
+            <div class="text-center">
+                <div class="font-serif text-3xl font-medium" id="totalNews">0</div>
+                <div class="text-xs text-[var(--text-muted)] mt-1">文章</div>
             </div>
-            <div class="bg-[var(--card)] rounded-xl p-4 text-center">
-                <div class="text-2xl font-bold text-[#4895ef]" id="dfCount">0</div>
-                <div class="text-xs text-[var(--muted)]">數位製造</div>
+            <div class="text-center">
+                <div class="font-serif text-3xl font-medium text-[#4895ef]" id="dfCount">0</div>
+                <div class="text-xs text-[var(--text-muted)] mt-1">數位製造</div>
             </div>
-            <div class="bg-[var(--card)] rounded-xl p-4 text-center">
-                <div class="text-2xl font-bold text-[#10b981]" id="prefabCount">0</div>
-                <div class="text-xs text-[var(--muted)]">預鑄/模組化</div>
+            <div class="text-center">
+                <div class="font-serif text-3xl font-medium text-[#10b981]" id="prefabCount">0</div>
+                <div class="text-xs text-[var(--text-muted)] mt-1">預鑄模組</div>
             </div>
-            <div class="bg-[var(--card)] rounded-xl p-4 text-center">
-                <div class="text-2xl font-bold text-[#8b5cf6]" id="aiCount">0</div>
-                <div class="text-xs text-[var(--muted)]">AI應用</div>
+            <div class="text-center">
+                <div class="font-serif text-3xl font-medium text-[#8b5cf6]" id="aiCount">0</div>
+                <div class="text-xs text-[var(--text-muted)] mt-1">AI應用</div>
             </div>
         </div>
 
         <!-- Filter -->
-        <div class="mb-6">
-            <p class="text-xs text-[var(--muted)] mb-2">分類主題</p>
-            <div class="flex flex-wrap gap-2">
-                <button onclick="filter('all')" class="filter-btn active px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="all">📋 全部</button>
-                <button onclick="filter('saved')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="saved">⭐ 已收藏</button>
-                <button onclick="filter('df')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="df">🔧 數位製造</button>
-                <button onclick="filter('prefab')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="prefab">🏗️ 預鑄模組</button>
-                <button onclick="filter('ai')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="ai">🤖 AI應用</button>
-                <button onclick="filter('material')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="material">🧱 材料</button>
-                <button onclick="filter('market')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="market">📈 市場</button>
-                <button onclick="filter('sustainability')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="sustainability">🌱 永續</button>
-                <button onclick="filter('lifestyle')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="lifestyle">🏠 房產開發</button>
-                <button onclick="filter('safety')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="safety">🦺 安全</button>
-                <button onclick="filter('automation')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="automation">⚙️ 自動化</button>
-                <button onclick="filter('bim')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="bim">📐 BIM</button>
-            </div>
+        <div class="flex flex-wrap gap-2 mb-10">
+            <button onclick="filter('all')" class="btn-filter active" data-filter="all">全部</button>
+            <button onclick="filter('saved')" class="btn-filter" data-filter="saved">收藏</button>
+            <button onclick="filter('lifestyle')" class="btn-filter" data-filter="lifestyle">房產開發</button>
+            <button onclick="filter('ai')" class="btn-filter" data-filter="ai">AI應用</button>
+            <button onclick="filter('df')" class="btn-filter" data-filter="df">數位製造</button>
+            <button onclick="filter('prefab')" class="btn-filter" data-filter="prefab">預鑄模組</button>
+            <button onclick="filter('automation')" class="btn-filter" data-filter="automation">自動化</button>
+            <button onclick="filter('bim')" class="btn-filter" data-filter="bim">BIM</button>
         </div>
 
-        <!-- AI Analysis Section -->
-        <div class="mt-8">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold">🧠 與X Foundry相關分析</h2>
-                <button onclick="analyzeRelevance()" class="text-sm px-4 py-2 bg-[var(--gold)] text-black rounded-lg">分析</button>
-            </div>
-            <div id="analysisResult" class="space-y-4">
-                <div class="bg-[var(--card)] rounded-xl p-5">
-                    <p class="text-sm text-[var(--muted)]">點擊「分析」自動產生與你的案子相關的資訊...</p>
-                </div>
-            </div>
-        </div>
+        <!-- Articles -->
+        <div id="articles" class="grid gap-4"></div>
     </main>
 
-    <!-- Translation Modal -->
-    <div id="translateModal" class="fixed inset-0 bg-black/90 hidden z-50 overflow-y-auto">
-        <div class="p-5">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold" id="modalTitle">文章翻譯</h2>
-                <button onclick="closeModal()" class="text-[var(--muted)]">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-            <div id="modalContent" class="bg-[var(--card)] rounded-xl p-6">
-                <div class="spinner mb-4"></div>
-                <p class="text-[var(--muted)]">載入中...</p>
-            </div>
-        </div>
-    </div>
+    <!-- Analysis -->
+    <section class="max-w-6xl mx-auto px-6 pb-12">
+        <h2 class="font-serif text-xl mb-6">相關分析</h2>
+        <button onclick="analyze()" class="px-6 py-3 bg-[#1a1a1a] text-white text-sm rounded">分析</button>
+        <div id="analysisResult" class="mt-6 grid gap-4"></div>
+    </section>
 
     <script>
-        const newsData = [
-            // AI應用
-            {
-                title: "2025-2026建築業5大技術趨勢：AI、機器人與永續成關鍵",
-                category: "ai",
-                tags: ["AI", "機器人", "永續", "BIM"],
-                source: "Autodesk", url: "https://www.autodesk.com/blogs/construction/2026-construction-trends-25-experts-share-insights/",
-                summary: "AI、機器人與自動化、數位建模工具、BIM、永續建築實踐將在2025-2026年大幅改變營建業。", date: "2026-03-27"
-            },
-            {
-                title: "94% AEC專業人士將在2026年增加AI使用",
-                category: "ai",
-                tags: ["AI", "調查", "趨勢"],
-                source: "ASCE", url: "https://www.asce.org/publications-and-news/civil-engineering-source/article/2025/12/18/architecture-engineering-construction-sector-slow-to-adapt-ai-survey-shows",
-                summary: "雖僅27% AEC專業人士目前使用AI，但94%使用者預期在2026年增加AI應用。", date: "2026-03-26"
-            },
-            {
-                title: "生成式AI助力建築設計優化",
-                category: "ai",
-                tags: ["生成式AI", "設計優化", "永續"],
-                source: "Forbes", url: "https://www.forbes.com/sites/kathleenwalch/2025/06/04/from-concept-to-construction-the-impact-of-ai-in-architecture/",
-                summary: "AI驅動軟體包括生成式設計工具，通過分析大量數據根據成本、永續性和結構完整性優化設計。", date: "2026-03-25"
-            },
-            {
-                title: "AI結合穿戴裝置提升工地安全",
-                category: "safety",
-                tags: ["安全", "AI", "物聯網"],
-                source: "Safety Tech", url: "https://beehiveinsurance.com/blog/2025/03/17/the-impact-of-ai-on-construction-in-2025-and-2026/",
-                summary: "AI動力穿戴裝置和電腦視覺系統即時監測工地，識別潛在危險，預測事故，大幅改善安全措施。", date: "2026-03-24"
-            },
-            // 數位製造
-            {
-                title: "3D混凝土列印技術突破：多層建築時代來臨",
-                category: "df",
-                tags: ["3D列印", "混凝土", "技術突破"],
-                source: "Construction Technology", url: "https://www.conexpoconagg.com/news/top-3-construction-technology-trends-to-watch-in-2",
-                summary: "3D混凝土列印已從小型原型進展到多層建築、橋梁和複雜建築項目，大幅減少浪費和縮短工期。", date: "2026-03-27"
-            },
-            {
-                title: "機器人鋼筋綁紮系統提升施工精度",
-                category: "automation",
-                tags: ["機器人", "BIM", "自動化"],
-                source: "Robotics Today", url: "https://www.advancing-computational-design.com/",
-                summary: "機器人已被用於創建鋼筋結構和創新地板系統，數位製造與BIM整合實現即時設計到生產流程。", date: "2026-03-26"
-            },
-            {
-                title: "數位孿生技術整合BIM與AI預測維護",
-                category: "bim",
-                tags: ["數位孿生", "BIM", "預測維護"],
-                source: "Digital Builder", url: "https://www.vectorworks.net/en-US/newsroom/future-architecture-trends",
-                summary: "數位孿生結合BIM和AI用於預測性維護和資產管理，預測設備故障以減少停機時間。", date: "2026-03-23"
-            },
-            // 預鑄模組
-            {
-                title: "全球模組化建築市場2026年突破1800億美元",
-                category: "market",
-                tags: ["市場", "預鑄", "模組化"],
-                source: "GM Insights", url: "https://www.gminsights.com/industry-analysis/modular-and-prefabricated-construction-market",
-                summary: "全球模組化和預鑄建築市場預計從171.1億美元增长至180.3億美元，年增長率強勁。", date: "2026-03-27"
-            },
-            {
-                title: "預鑄建築效率提升50%",
-                category: "prefab",
-                tags: ["效率", "品質", "永續"],
-                source: "Prefab Expert", url: "https://www.msuite.com/prefabrication-in-2026-why-industrialized-construction-is-becoming-the-standard/",
-                summary: "在受控工廠環境中製造建築構件和模組，確保質量一致並允許更快的現場組裝，項目完成速度提升達50%。", date: "2026-03-25"
-            },
-            {
-                title: "CLT交叉層積材在預鑄建築中的應用",
-                category: "material",
-                tags: ["CLT", "木材", "永續"],
-                source: "Timber Construction", url: "https://www.re-thinkingthefuture.com/technologies/gp3847-modular-and-prefabricated-architecture-trends-in-2025/",
-                summary: "預鑄 inherently支持永續性，通過優化材料使用、減少現場浪費，並整合環保材料如CLT。", date: "2026-03-23"
-            },
-            // 永續
-            {
-                title: "新型永續材料突破傳統建材限制",
-                category: "sustainability",
-                tags: ["永續材料", "創新", "建材"],
-                source: "Material Innovation", url: "https://www.novatr.com/blog/digital-fabrication-guide",
-                summary: "數位製造領域的關鍵突破是開發高效和永續的新材料，有望與傳統建材競爭。", date: "2026-03-24"
-            },
-            // 市場
-            {
-                title: "Deloitte預測：2026營建業技術變革",
-                category: "market",
-                tags: ["報告", "趨勢", "轉型"],
-                source: "Deloitte", url: "https://www.deloitte.com/us/en/insights/industry/engineering-and-construction/engineering-and-construction-industry-outlook.html",
-                summary: "Deloitte報告指出AI、數位孿生、IoT將在2026年推動營建業轉型，提高效率和降低成本。", date: "2026-03-22"
-            },
-            // 房地產開發新模式 - Lifestyle
-            {
-                title: "One Beverly Hills - 17.5英畝超豪華生活社區",
-                category: "lifestyle",
-                tags: ["豪華住宅", "酒店式服務", "園林設計", "Aman"],
-                source: "Multi-Housing News", url: "https://www.multihousingnews.com/beverly-hills-mixed-use-development-gets-4-3b-in-financing/",
-                summary: "$100億美元項目，結合Aman酒店與住宅、-extensive園林設計，打造頂級生活體驗。2024動工，2025展開垂直開發。", date: "2026-03-27"
-            },
-            {
-                title: "West Edge - 洛杉矶獲獎混合用途社區",
-                category: "lifestyle",
-                tags: ["TOD", "LEED", "WELL認證", "獲獎"],
-                source: "LA Business Journal", url: "https://labusinessjournal.com/business-journal-events/2024-commercial-real-estate-awards-mixed-use/",
-                summary: "PCBC Gold Nugget Grand Prize獲獎項目，結合豪華住宅、辦公、零售與開放廣場，WELL Core & Shell認證。", date: "2026-03-26"
-            },
-            {
-                title: "The Dallas EDITION - 精品酒店與豪華住宅結合",
-                category: "lifestyle",
-                tags: ["酒店", "住宅", "豪華", "Katy Trail"],
-                source: "Dallas Innovates", url: "https://dallasinnovates.com/edition-hotel-residences-to-be-centerpiece-of-uptown-dallas-chalk-hill-development/",
-                summary: "五星級EDITION酒店+60戶豪華住宅，直接連接Katy Trail，標誌德州首個EDITION項目。", date: "2026-03-25"
-            },
-            {
-                title: "Nantou Hybrid Building - 深圳城市活化典範",
-                category: "lifestyle",
-                tags: ["城市更新", "Dezeen獲獎", "創新設計"],
-                source: "Dezeen Awards", url: "https://www.dezeen.com/awards/2024/winners/categories/architecture/mixed-use-project-of-the-year/",
-                summary: "Urbanus Architecture設計，榮獲2024 Dezeen「年度混合用途項目」，展現創新城市活化。", date: "2026-03-24"
-            },
-            {
-                title: "Knox & McKinney - 達拉斯精品辦公與零售",
-                category: "lifestyle",
-                tags: ["精品零售", "辦公", "hospitality"],
-                source: "Trammell Crow", url: "https://www.trammellcrow.com/newsroom/knox-street-enters-its-next-evolution-with-knox-and-mckinney",
-                summary: "2026年3月動工，精品辦公空間與精選零售餐飲，結合hospitality設施。", date: "2026-03-23"
-            },
-            {
-                title: "Shorehaven - 亞利桑那州大型規劃社區",
-                category: "lifestyle",
-                tags: ["住宅", "規劃社區", "室內外設施"],
-                source: "MegaProject", url: "https://megaproject.com/news/mixed-use/7-mixed-use-projects-to-watch-in-2025",
-                summary: "$18億South Pier總體規劃社區，722戶住宅，2026完工，結合室內外完善設施。", date: "2026-03-22"
-            },
-            {
-                title: "Sumou Towers - 沙烏地阿拉伯奢華地標",
-                category: "lifestyle",
-                tags: ["奢華", "地標", "獲獎"],
-                source: "Luxury Lifestyle Awards", url: "https://luxurylifestyleawards.com",
-                summary: "Asmou開發，榮獲2024 Luxury Lifestyle Awards「最佳奢華混合用途開發」。", date: "2026-03-21"
-            },
-            {
-                title: "Be Grand Reforma - 墨西哥城49層地標",
-                category: "lifestyle",
-                tags: ["住宅", "商業", "零售"],
-                source: "Luxury Lifestyle Awards", url: "https://luxurylifestyleawards.com",
-                summary: "2023年完工，49層混合用途建築，2024獲Luxury Lifestyle Awards肯定。", date: "2026-03-20"
-            },
-            {
-                title: "Willets Point - 紐約皇后區3億美元重建",
-                category: "lifestyle",
-                tags: ["都市更新", "社會住宅", "零售"],
-                source: "Multi Family Dive", url: "https://www.multifamilydive.com/news/mixed-use-projects-2025-new-york-city-north-carolina-houston-los-angeles/737318/",
-                summary: "Related Cos.投資$30億，首期含1100戶社會住宅與零售，重要都市更新項目。", date: "2026-03-19"
-            }
+        let currentFilter = 'all';
+        let saved = JSON.parse(localStorage.getItem('saved') || '[]');
+
+        const articles = [
+            {title: "One Beverly Hills - 17.5英畝超豪華生活社區", category: "lifestyle", source: "Multi-Housing News", url: "https://www.multihousingnews.com/beverly-hills-mixed-use-development-gets-4-3b-in-financing/", summary: "$100億美元項目，結合Aman酒店與住宅、園林設計，打造頂級生活體驗。", date: "2026-03-27"},
+            {title: "West Edge - 洛杉矶獲獎混合用途社區", category: "lifestyle", source: "LA Business Journal", url: "https://labusinessjournal.com/business-journal-events/2024-commercial-real-estate-awards-mixed-use/", summary: "PCBC Gold Nugget Grand Prize獲獎項目，WELL Core & Shell認證。", date: "2026-03-26"},
+            {title: "The Dallas EDITION - 精品酒店與豪華住宅", category: "lifestyle", source: "Dallas Innovates", url: "https://dallasinnovates.com/edition-hotel-residences-to-be-centerpiece-of-uptown-dallas-chalk-hill-development/", summary: "五星級EDITION酒店+60戶豪華住宅，直接連接Katy Trail。", date: "2026-03-25"},
+            {title: "Nantou Hybrid Building - 深圳城市活化典範", category: "lifestyle", source: "Dezeen Awards", url: "https://www.dezeen.com/awards/2024/winners/categories/architecture/mixed-use-project-of-the-year/", summary: "Urbanus Architecture設計，榮獲2024 Dezeen「年度混合用途項目」。", date: "2026-03-24"},
+            {title: "Knox & McKinney - 達拉斯精品辦公與零售", category: "lifestyle", source: "Trammell Crow", url: "https://www.trammellcrow.com/newsroom/knox-street-enters-its-next-evolution-with-knox-and-mckinney", summary: "2026年3月動工，精品辦公空間與精選零售餐飲。", date: "2026-03-23"},
+            {title: "94% AEC專業人士將在2026年增加AI使用", category: "ai", source: "ASCE", url: "https://www.asce.org/publications-and-news/civil-engineering-source/article/2025/12/18/architecture-engineering-construction-sector-slow-to-adapt-ai-survey-shows", summary: "雖僅27%使用AI，但94%預期在2026年增加應用。", date: "2026-03-26"},
+            {title: "生成式AI助力建築設計優化", category: "ai", source: "Forbes", url: "https://www.forbes.com/sites/kathleenwalch/2025/06/04/from-concept-to-construction-the-impact-of-ai-in-architecture/", summary: "AI驅動軟體包括生成式設計工具，根據成本、永續性優化設計。", date: "2026-03-25"},
+            {title: "AI結合穿戴裝置提升工地安全", category: "ai", source: "Safety Tech", url: "https://beehiveinsurance.com/blog/2025/03/17/the-impact-of-ai-on-construction-in-2025-and-2026/", summary: "AI動力穿戴裝置和電腦視覺系統即時監測工地，預測事故。", date: "2026-03-24"},
+            {title: "3D混凝土列印技術突破：多層建築時代", category: "df", source: "Construction Technology", url: "https://www.conexpoconagg.com/news/top-3-construction-technology-trends-to-watch-in-2", summary: "3D混凝土列印已從小型原型進展到多層建築、橋梁。", date: "2026-03-27"},
+            {title: "數位孿生技術整合BIM與AI預測維護", category: "bim", source: "Digital Builder", url: "https://www.vectorworks.net/en-US/newsroom/future-architecture-trends", summary: "數位孿生結合BIM和AI用於預測性維護和資產管理。", date: "2026-03-23"},
+            {title: "預鑄建築效率提升50%", category: "prefab", source: "Prefab Expert", url: "https://www.msuite.com/prefabrication-in-2026-why-industrialized-construction-is-becoming-the-standard/", summary: "工廠環境製造建築構件，項目完成速度提升達50%。", date: "2026-03-25"},
+            {title: "全球模組化建築市場2026年突破1800億美元", category: "prefab", source: "GM Insights", url: "https://www.gminsights.com/industry-analysis/modular-and-prefabricated-construction-market", summary: "全球模組化和預鑄建築市場預計達180.3億美元。", date: "2026-03-27"}
         ];
 
-        let currentFilter = 'all';
-        let savedArticles = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-
-        function toggleSave(idx) {
-            if (savedArticles.includes(idx)) {
-                savedArticles = savedArticles.filter(i => i !== idx);
-            } else {
-                savedArticles.push(idx);
-            }
-            localStorage.setItem('savedArticles', JSON.stringify(savedArticles));
-            render();
-        }
-
         function render() {
-            let filtered;
-            if (currentFilter === 'all') {
-                filtered = newsData;
-            } else if (currentFilter === 'saved') {
-                filtered = newsData.filter((_, idx) => savedArticles.includes(idx));
-            } else {
-                filtered = newsData.filter(n => n.category === currentFilter);
-            }
+            let filtered = currentFilter === 'all' ? articles : currentFilter === 'saved' ? articles.filter((_, i) => saved.includes(i)) : articles.filter(a => a.category === currentFilter);
             
-            document.getElementById('totalNews').textContent = newsData.length;
-            document.getElementById('dfCount').textContent = newsData.filter(n => n.category === 'df').length;
-            document.getElementById('prefabCount').textContent = newsData.filter(n => n.category === 'prefab').length;
-            document.getElementById('aiCount').textContent = newsData.filter(n => n.category === 'ai').length;
+            document.getElementById('totalNews').textContent = articles.length;
+            document.getElementById('dfCount').textContent = articles.filter(a => a.category === 'df').length;
+            document.getElementById('prefabCount').textContent = articles.filter(a => a.category === 'prefab').length;
+            document.getElementById('aiCount').textContent = articles.filter(a => a.category === 'ai').length;
             
-            // Update stat cards for new categories
-            const catCounts = {
-                'df': newsData.filter(n => n.category === 'df').length,
-                'prefab': newsData.filter(n => n.category === 'prefab').length,
-                'ai': newsData.filter(n => n.category === 'ai').length,
-                'sustainability': newsData.filter(n => n.category === 'sustainability').length,
-                'safety': newsData.filter(n => n.category === 'safety').length,
-                'automation': newsData.filter(n => n.category === 'automation').length,
-                'bim': newsData.filter(n => n.category === 'bim').length,
-                'material': newsData.filter(n => n.category === 'material').length,
-                'market': newsData.filter(n => n.category === 'market').length
-            };
-            
-            const grid = document.getElementById('newsGrid');
-            grid.innerHTML = filtered.map((item, idx) => {
-                const tagClass = {
-                    'df': 'tag-df',
-                    'prefab': 'tag-prefab', 
-                    'ai': 'tag-ai',
-                    'material': 'tag-mat',
-                    'market': 'tag-market',
-                    'lifestyle': 'tag-lifestyle'
-                }[item.category];
-                
-                const catName = {
-                    'df': '數位製造',
-                    'prefab': '預鑄模組',
-                    'ai': 'AI應用',
-                    'material': '材料',
-                    'market': '市場',
-                    'lifestyle': '🏠房產開發'
-                }[item.category];
-                
-                return `
-                    <div class="bg-[var(--card)] rounded-xl p-5 hover:transform hover:-translate-y-1 transition">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="tag ${tagClass}">${catName}</span>
-                            <span class="text-xs text-[var(--muted)]">${item.date}</span>
-                        </div>
-                        <h3 class="text-lg font-semibold mb-2">${item.title}</h3>
-                        <p class="text-sm text-[var(--muted)] mb-3">${item.summary}</p>
-        <div class="flex flex-wrap gap-2 mb-3">
-                            ${item.tags.map(t => `<span class="text-xs px-2 py-1 bg-[#1a1a24] rounded">${t}</span>`).join('')}
-                        </div>
-                        <div class="flex justify-between items-center mt-3 pt-3 border-t border-[#1a1a24]">
-                            <span class="text-xs text-[var(--muted)]">來源: ${item.source}</span>
-                            <div class="flex gap-2">
-                                <button onclick="toggleSave(${idx})" class="text-sm ${savedArticles.includes(idx) ? 'text-[var(--gold)]' : 'text-[var(--muted)]'}">${savedArticles.includes(idx) ? '★ 已收藏' : '☆ 收藏'}</button>
-                                <a href="${item.url}" target="_blank" class="source-link text-xs">查看原文 →</a>
-                                <button onclick="translateArticle(${idx})" class="text-xs text-[var(--gold)] hover:underline">📖 翻譯</button>
-                            </div>
+            document.getElementById('articles').innerHTML = filtered.map((a, i) => `
+                <div class="card-article">
+                    <div class="tag-category">${a.source} · ${a.date}</div>
+                    <h3 class="font-serif text-lg font-medium mb-3">${a.title}</h3>
+                    <p class="text-sm text-[var(--text-muted)] mb-4 leading-relaxed">${a.summary}</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex gap-4 text-xs">
+                            <button onclick="toggleSave(${i})" class="${saved.includes(i) ? 'text-[var(--gold)]' : 'text-[var(--text-muted)]'} hover:text-[var(--gold)]">${saved.includes(i) ? '★ 已收藏' : '☆ 收藏'}</button>
+                            <a href="${a.url}" target="_blank" class="text-[var(--text-muted)] hover:text-[var(--gold)]">原文</a>
                         </div>
                     </div>
-                `;
-            }).join('');
+                </div>
+            `).join('');
             
-            document.getElementById('lastUpdate').textContent = new Date().toLocaleString('zh-TW', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleString('zh-TW', {month:'numeric', day:'numeric'});
         }
 
         function filter(cat) {
             currentFilter = cat;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.filter === cat);
-            });
+            document.querySelectorAll('.btn-filter').forEach(b => b.classList.toggle('active', b.dataset.filter === cat));
             render();
         }
 
-        function refreshData() {
+        function toggleSave(i) {
+            saved = saved.includes(i) ? saved.filter(x => x !== i) : [...saved, i];
+            localStorage.setItem('saved', JSON.stringify(saved));
             render();
-            alert('資料已更新！');
         }
 
-        function translateArticle(idx) {
-            const item = newsData[idx];
-            document.getElementById('modalTitle').textContent = item.title;
-            document.getElementById('modalContent').innerHTML = `
-                <div class="spinner mb-4"></div>
-                <p class="text-[var(--muted)]">正在翻譯...</p>
-            `;
-            document.getElementById('translateModal').classList.remove('hidden');
-            
-            // Open Google Translate in new tab
-            window.open(`https://translate.google.com/translate?sl=en&tl=zh-TW&u=${encodeURIComponent(item.url)}`, '_blank');
-            
-            // Also show a preview
-            document.getElementById('modalContent').innerHTML = `
-                <div class="mb-4 p-3 bg-[#1a1a24] rounded-lg">
-                    <p class="text-sm text-[var(--muted)] mb-2">📄 原文摘要 (${item.source})</p>
-                    <p class="text-sm">${item.summary}</p>
-                </div>
-                <div class="mb-4 p-3 bg-[#2a2a35] rounded-lg">
-                    <p class="text-sm text-[var(--gold)] mb-2">📖 中文翻譯</p>
-                    <p class="text-sm">${item.summary}</p>
-                </div>
-                <a href="https://translate.google.com/translate?sl=en&tl=zh-TW&u=${encodeURIComponent(item.url)}" target="_blank" class="block w-full text-center py-3 bg-[var(--accent)] rounded-lg text-sm font-medium">
-                    🔗 在 Google 翻譯中查看完整內容
-                </a>
-            `;
-        }
-
-        function closeModal() {
-            document.getElementById('translateModal').classList.add('hidden');
-        }
-
-        function analyzeRelevance() {
-            const resultDiv = document.getElementById('analysisResult');
-            resultDiv.innerHTML = `
-                <div class="bg-[var(--card)] rounded-xl p-5">
-                    <div class="spinner mb-4"></div>
-                    <p class="text-sm text-[var(--muted)]">正在分析...</p>
-                </div>
-            `;
-            
-            const relevant = newsData.filter(n => ['df', 'prefab', 'ai', 'automation', 'sustainability'].includes(n.category));
-            
-            const analysis = `
-                <div class="bg-[var(--card)] rounded-xl p-5">
-                    <h3 class="text-lg font-semibold mb-4 text-[var(--gold)]">🎯 與X Foundry相關的商機</h3>
-                    <div class="space-y-4">
-                        <div class="border-l-2 border-[#10b981] pl-4">
-                            <p class="font-medium text-sm">🤖 機器人/自動化</p>
-                            <p class="text-xs text-[var(--muted)] mt-1">${relevant.filter(n => n.category === 'automation').length}篇 - 鋼筋綁紮、自動化施工可直接借鏡</p>
+        function analyze() {
+            const rel = articles.filter(a => ['df', 'prefab', 'ai', 'automation', 'lifestyle'].includes(a.category));
+            document.getElementById('analysisResult').innerHTML = `
+                <div class="bg-white border border-[#e8e6e3] p-6">
+                    <h3 class="font-serif text-lg mb-4">相關商機</h3>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="p-4 bg-[#faf9f7]">
+                            <p class="font-medium mb-2">房產開發</p>
+                            <p class="text-[var(--text-muted)]">${rel.filter(a => a.category === 'lifestyle').length}篇 - 國際頂級案例可借鏡</p>
                         </div>
-                        <div class="border-l-2 border-[#4895ef] pl-4">
-                            <p class="font-medium text-sm">🏗️ 預鑄/模組化</p>
-                            <p class="text-xs text-[var(--muted)] mt-1">市場1800億美元 - 社會住宅、都更項目商機</p>
+                        <div class="p-4 bg-[#faf9f7]">
+                            <p class="font-medium mb-2">AI應用</p>
+                            <p class="text-[var(--text-muted)]">${rel.filter(a => a.category === 'ai').length}篇 - 94% AEC將增加使用</p>
                         </div>
-                        <div class="border-l-2 border-[#8b5cf6] pl-4">
-                            <p class="font-medium text-sm">🤖 AI應用</p>
-                            <p class="text-xs text-[var(--muted)] mt-1">94% AEC將增加AI使用 - 設計優化、施工安全</p>
+                        <div class="p-4 bg-[#faf9f7]">
+                            <p class="font-medium mb-2">預鑄技術</p>
+                            <p class="text-[var(--text-muted)]">${rel.filter(a => a.category === 'prefab').length}篇 - 市場1800億美元</p>
                         </div>
-                        <div class="border-l-2 border-[#f59e0b] pl-4">
-                            <p class="font-medium text-sm">🌱 永續材料</p>
-                            <p class="text-xs text-[var(--muted)] mt-1">地聚合物、CLT與你研究資料庫契合</p>
+                        <div class="p-4 bg-[#faf9f7]">
+                            <p class="font-medium mb-2">數位製造</p>
+                            <p class="text-[var(--text-muted)]">${rel.filter(a => a.category === 'df').length}篇 - 3D列印技術突破</p>
                         </div>
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-[#1a1a24]">
-                        <h4 class="font-medium text-sm mb-2">💡 建議方向</h4>
-                        <ul class="text-xs text-[var(--muted)] space-y-1">
-                            <li>• 與台灣營造廠策略合作，導入機器人預鑄技術</li>
-                            <li>• 爭取政府社會住宅標案</li>
-                            <li>• 發展地震災區快速重建方案</li>
-                            <li>• 結合CLT與3D列印開發新產品</li>
-                        </ul>
                     </div>
                 </div>
             `;
-            
-            setTimeout(() => { resultDiv.innerHTML = analysis; }, 800);
         }
 
         render();
