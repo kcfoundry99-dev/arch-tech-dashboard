@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X Foundry | 建築科技前沿</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card: #12121a;
+            --gold: #d4a574;
+            --text: #fff;
+            --muted: #6a6a7a;
+            --accent: #e63946;
+        }
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        .tag {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .tag-df { background: rgba(72, 149, 239, 0.2); color: #4895ef; }
+        .tag-prefab { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .tag-ai { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+        .tag-mat { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .tag-market { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    </style>
+</head>
+<body>
+    <header class="sticky top-0 bg-[#0a0a0f]/95 backdrop-blur-sm z-50 border-b border-[#1a1a24]">
+        <div class="max-w-6xl mx-auto px-5 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold">X Foundry</h1>
+                <p class="text-xs text-[var(--muted)]">建築科技前沿 | 更新: <span id="lastUpdate">—</span></p>
+            </div>
+            <button onclick="refreshData()" class="text-sm px-4 py-2 bg-[var(--accent)] rounded-lg">更新資料</button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-5 py-6">
+        <!-- Stats -->
+        <div class="grid grid-cols-4 gap-4 mb-8">
+            <div class="bg-[var(--card)] rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold" id="totalNews">0</div>
+                <div class="text-xs text-[var(--muted)]">總文章</div>
+            </div>
+            <div class="bg-[var(--card)] rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold text-[#4895ef]" id="dfCount">0</div>
+                <div class="text-xs text-[var(--muted)]">數位製造</div>
+            </div>
+            <div class="bg-[var(--card)] rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold text-[#10b981]" id="prefabCount">0</div>
+                <div class="text-xs text-[var(--muted)]">預鑄/模組化</div>
+            </div>
+            <div class="bg-[var(--card)] rounded-xl p-4 text-center">
+                <div class="text-2xl font-bold text-[#8b5cf6]" id="aiCount">0</div>
+                <div class="text-xs text-[var(--muted)]">AI應用</div>
+            </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+            <button onclick="filter('all')" class="filter-btn active px-4 py-2 rounded-lg bg-[var(--card)] text-sm whitespace-nowrap" data-filter="all">全部</button>
+            <button onclick="filter('df')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm whitespace-nowrap" data-filter="df">數位製造</button>
+            <button onclick="filter('prefab')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm whitespace-nowrap" data-filter="prefab">預鑄模組</button>
+            <button onclick="filter('ai')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm whitespace-nowrap" data-filter="ai">AI應用</button>
+            <button onclick="filter('material')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm whitespace-nowrap" data-filter="material">材料</button>
+            <button onclick="filter('market')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm whitespace-nowrap" data-filter="market">市場</button>
+        </div>
+
+        <!-- News Grid -->
+        <div id="newsGrid" class="space-y-4">
+            <!-- News items will be inserted here -->
+        </div>
+    </main>
+
+    <script>
+        const newsData = [
+            {
+                title: "3D混凝土列印技術突破：多層建築時代來臨",
+                category: "df",
+                date: "2026-03-27",
+                source: "Construction Technology",
+                summary: "3D混凝土列印已從小型原型進展到多層建築、橋梁和複雜建築項目，大幅減少浪費和縮短工期。",
+                tags: ["3D列印", "混凝土", "技術突破"]
+            },
+            {
+                title: "全球模組化建築市場2026年突破1800億美元",
+                category: "prefab",
+                date: "2026-03-27",
+                source: "GM Insights",
+                summary: "全球模組化和預鑄建築市場預計從171.1億美元增长至180.3億美元，年增長率強勁。",
+                tags: ["市場", "預鑄", "模組化"]
+            },
+            {
+                title: "94% AEC專業人士將在2026年增加AI使用",
+                category: "ai",
+                date: "2026-03-26",
+                source: "ASCE Survey",
+                summary: "雖僅27% AEC專業人士目前使用AI，但94%使用者預期在2026年增加AI應用。",
+                tags: ["AI", "調查", "趨勢"]
+            },
+            {
+                title: "機器人鋼筋綁紮系統提升施工精度",
+                category: "df",
+                date: "2026-03-26",
+                source: "Robotics Today",
+                summary: "機器人已被用於創建鋼筋結構和創新地板系統，數位製造與BIM整合實現即時設計到生產流程。",
+                tags: ["機器人", "BIM", "自動化"]
+            },
+            {
+                title: "預鑄建築效率提升50%",
+                category: "prefab",
+                date: "2026-03-25",
+                source: "Prefab Expert",
+                summary: "在受控工廠環境中製造建築構件和模組，確保質量一致並允許更快的現場組裝，項目完成速度提升達50%。",
+                tags: ["效率", "品質", "永續"]
+            },
+            {
+                title: "生成式AI助 力建築設計優化",
+                category: "ai",
+                date: "2026-03-25",
+                source: "Forbes",
+                summary: "AI驅動軟體包括生成式設計工具，通過分析大量數據根據成本、永續性和結構完整性優化設計。",
+                tags: ["生成式AI", "設計優化", "永續"]
+            },
+            {
+                title: "新型永續材料突破傳統建材限制",
+                category: "material",
+                date: "2026-03-24",
+                source: "Material Innovation",
+                summary: "數位製造領域的關鍵突破是開發高效和永續的新材料，有望與傳統建材競爭。",
+                tags: ["永續材料", "創新", "建材"]
+            },
+            {
+                title: "AI結合穿戴裝置提升工地安全",
+                category: "ai",
+                date: "2026-03-24",
+                source: "Safety Tech",
+                summary: "AI動力穿戴裝置和電腦視覺系統即時監測工地，識別潛在危險，預測事故，大幅改善安全措施。",
+                tags: ["安全", "AI", "物聯網"]
+            },
+            {
+                title: "CLT交叉層積材在預鑄建築中的應用",
+                category: "prefab",
+                date: "2026-03-23",
+                source: "Timber Construction",
+                summary: "預鑄 inherently支持永續性，通過優化材料使用、減少現場浪費，並整合環保材料如CLT。",
+                tags: ["CLT", "木材", "永續"]
+            },
+            {
+                title: "數位孿生技術整合BIM與AI預測維護",
+                category: "df",
+                date: "2026-03-23",
+                source: "Digital Builder",
+                summary: "數位孿生結合BIM和AI用於預測性維護和資產管理，預測設備故障以減少停機時間。",
+                tags: ["數位孿生", "BIM", "預測維護"]
+            },
+            {
+                title: "AI在建築能耗模擬中的應用",
+                category: "ai",
+                date: "2026-03-22",
+                source: "Green Building",
+                summary: "AI分析建築能源效率，提供優化建議，實現更永續的建築營運。",
+                tags: ["能耗", "AI", "永續"]
+            },
+            {
+                title: "自動化砌磚機器人市佔率成長",
+                category: "df",
+                date: "2026-03-22",
+                source: "Construction Robotics",
+                summary: "AI整合機器人自動化砌磚、挖據和材料運輸等勞動密集型任務，提高精度並減少人為錯誤。",
+                tags: ["自動化", "機器人", "勞動力"]
+            }
+        ];
+
+        let currentFilter = 'all';
+
+        function render() {
+            const filtered = currentFilter === 'all' 
+                ? newsData 
+                : newsData.filter(n => n.category === currentFilter);
+            
+            document.getElementById('totalNews').textContent = newsData.length;
+            document.getElementById('dfCount').textContent = newsData.filter(n => n.category === 'df').length;
+            document.getElementById('prefabCount').textContent = newsData.filter(n => n.category === 'prefab').length;
+            document.getElementById('aiCount').textContent = newsData.filter(n => n.category === 'ai').length;
+            
+            const grid = document.getElementById('newsGrid');
+            grid.innerHTML = filtered.map(item => {
+                const tagClass = {
+                    'df': 'tag-df',
+                    'prefab': 'tag-prefab', 
+                    'ai': 'tag-ai',
+                    'material': 'tag-mat',
+                    'market': 'tag-market'
+                }[item.category];
+                
+                const catName = {
+                    'df': '數位製造',
+                    'prefab': '預鑄模組',
+                    'ai': 'AI應用',
+                    'material': '材料',
+                    'market': '市場'
+                }[item.category];
+                
+                return `
+                    <div class="bg-[var(--card)] rounded-xl p-5 hover:transform hover:-translate-y-1 transition">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="tag ${tagClass}">${catName}</span>
+                            <span class="text-xs text-[var(--muted)]">${item.date}</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">${item.title}</h3>
+                        <p class="text-sm text-[var(--muted)] mb-3">${item.summary}</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${item.tags.map(t => `<span class="text-xs px-2 py-1 bg-[#1a1a24] rounded">${t}</span>`).join('')}
+                        </div>
+                        <div class="mt-3 text-xs text-[var(--muted)]">來源: ${item.source}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleString('zh-TW', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
+        }
+
+        function filter(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === cat);
+            });
+            render();
+        }
+
+        function refreshData() {
+            render();
+            alert('資料已更新！');
+        }
+
+        render();
+    </script>
+</body>
+</html>
