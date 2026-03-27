@@ -79,7 +79,8 @@
         <div class="mb-6">
             <p class="text-xs text-[var(--muted)] mb-2">分類主題</p>
             <div class="flex flex-wrap gap-2">
-                <button onclick="filter('all')" class="filter-btn active px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="all">全部</button>
+                <button onclick="filter('all')" class="filter-btn active px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="all">📋 全部</button>
+                <button onclick="filter('saved')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="saved">⭐ 已收藏</button>
                 <button onclick="filter('df')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="df">🔧 數位製造</button>
                 <button onclick="filter('prefab')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="prefab">🏗️ 預鑄模組</button>
                 <button onclick="filter('ai')" class="filter-btn px-4 py-2 rounded-lg bg-[var(--card)] text-sm" data-filter="ai">🤖 AI應用</button>
@@ -208,11 +209,27 @@
         ];
 
         let currentFilter = 'all';
+        let savedArticles = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+
+        function toggleSave(idx) {
+            if (savedArticles.includes(idx)) {
+                savedArticles = savedArticles.filter(i => i !== idx);
+            } else {
+                savedArticles.push(idx);
+            }
+            localStorage.setItem('savedArticles', JSON.stringify(savedArticles));
+            render();
+        }
 
         function render() {
-            const filtered = currentFilter === 'all' 
-                ? newsData 
-                : newsData.filter(n => n.category === currentFilter);
+            let filtered;
+            if (currentFilter === 'all') {
+                filtered = newsData;
+            } else if (currentFilter === 'saved') {
+                filtered = newsData.filter((_, idx) => savedArticles.includes(idx));
+            } else {
+                filtered = newsData.filter(n => n.category === currentFilter);
+            }
             
             document.getElementById('totalNews').textContent = newsData.length;
             document.getElementById('dfCount').textContent = newsData.filter(n => n.category === 'df').length;
@@ -258,12 +275,13 @@
                         </div>
                         <h3 class="text-lg font-semibold mb-2">${item.title}</h3>
                         <p class="text-sm text-[var(--muted)] mb-3">${item.summary}</p>
-                        <div class="flex flex-wrap gap-2 mb-3">
+        <div class="flex flex-wrap gap-2 mb-3">
                             ${item.tags.map(t => `<span class="text-xs px-2 py-1 bg-[#1a1a24] rounded">${t}</span>`).join('')}
                         </div>
                         <div class="flex justify-between items-center mt-3 pt-3 border-t border-[#1a1a24]">
                             <span class="text-xs text-[var(--muted)]">來源: ${item.source}</span>
                             <div class="flex gap-2">
+                                <button onclick="toggleSave(${idx})" class="text-sm ${savedArticles.includes(idx) ? 'text-[var(--gold)]' : 'text-[var(--muted)]'}">${savedArticles.includes(idx) ? '★ 已收藏' : '☆ 收藏'}</button>
                                 <a href="${item.url}" target="_blank" class="source-link text-xs">查看原文 →</a>
                                 <button onclick="translateArticle(${idx})" class="text-xs text-[var(--gold)] hover:underline">📖 翻譯</button>
                             </div>
@@ -288,7 +306,7 @@
             alert('資料已更新！');
         }
 
-        async function translateArticle(idx) {
+        function translateArticle(idx) {
             const item = newsData[idx];
             document.getElementById('modalTitle').textContent = item.title;
             document.getElementById('modalContent').innerHTML = `
