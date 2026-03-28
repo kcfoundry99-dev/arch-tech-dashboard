@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X Foundry | 建築科技與房產前沿</title>
+    <title>X Foundry | 建築科技與亞洲房產前沿</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Outfit:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
@@ -51,6 +51,15 @@
             color: var(--gold);
             margin-bottom: 10px;
         }
+        
+        .taiwan-tag {
+            background: #e63946;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +67,7 @@
         <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
             <div>
                 <h1 class="font-serif text-2xl font-medium">X Foundry</h1>
-                <p class="text-xs text-[var(--text-muted)] mt-1">建築科技與房產前沿</p>
+                <p class="text-xs text-[var(--text-muted)] mt-1">亞洲建築科技與房產前沿</p>
             </div>
             <span class="text-xs text-[var(--text-muted)]" id="lastUpdate"></span>
         </div>
@@ -66,14 +75,18 @@
 
     <main class="max-w-6xl mx-auto px-6 py-8">
         <!-- Stats -->
-        <div class="grid grid-cols-4 gap-4 mb-10">
+        <div class="grid grid-cols-5 gap-4 mb-10">
             <div class="text-center">
                 <div class="font-serif text-3xl font-medium" id="totalNews">0</div>
                 <div class="text-xs text-[var(--text-muted)] mt-1">文章</div>
             </div>
             <div class="text-center">
-                <div class="font-serif text-3xl font-medium text-[#4895ef]" id="dfCount">0</div>
-                <div class="text-xs text-[var(--text-muted)] mt-1">數位製造</div>
+                <div class="font-serif text-3xl font-medium text-[#e63946]" id="taiwanCount">0</div>
+                <div class="text-xs text-[var(--text-muted)] mt-1">台灣</div>
+            </div>
+            <div class="text-center">
+                <div class="font-serif text-3xl font-medium text-[#4895ef]" id="asiaCount">0</div>
+                <div class="text-xs text-[var(--text-muted)] mt-1">亞洲</div>
             </div>
             <div class="text-center">
                 <div class="font-serif text-3xl font-medium text-[#10b981]" id="prefabCount">0</div>
@@ -89,23 +102,22 @@
         <div class="flex flex-wrap gap-2 mb-10">
             <button onclick="filter('all')" class="btn-filter active" data-filter="all">全部</button>
             <button onclick="filter('saved')" class="btn-filter" data-filter="saved">收藏</button>
+            <button onclick="filter('taiwan')" class="btn-filter" data-filter="taiwan">台灣</button>
+            <button onclick="filter('asia')" class="btn-filter" data-filter="asia">亞洲</button>
             <button onclick="filter('lifestyle')" class="btn-filter" data-filter="lifestyle">房產開發</button>
             <button onclick="filter('ai')" class="btn-filter" data-filter="ai">AI應用</button>
-            <button onclick="filter('df')" class="btn-filter" data-filter="df">數位製造</button>
             <button onclick="filter('prefab')" class="btn-filter" data-filter="prefab">預鑄模組</button>
-            <button onclick="filter('automation')" class="btn-filter" data-filter="automation">自動化</button>
-            <button onclick="filter('bim')" class="btn-filter" data-filter="bim">BIM</button>
         </div>
 
         <!-- Articles -->
         <div id="articles" class="grid gap-6"></div>
     </main>
 
-    <!-- Analysis -->
+    <!-- Future Analysis -->
     <section class="max-w-6xl mx-auto px-6 pb-12">
-        <h2 class="font-serif text-xl mb-6">相關分析</h2>
-        <button onclick="analyze()" class="px-6 py-3 bg-[#1a1a1a] text-white text-sm rounded">分析</button>
-        <div id="analysisResult" class="mt-6 grid gap-4"></div>
+        <h2 class="font-serif text-xl mb-6">未來趨勢分析</h2>
+        <button onclick="analyze()" class="px-6 py-3 bg-[#1a1a1a] text-white text-sm rounded">產生分析報告</button>
+        <div id="analysisResult" class="mt-6 grid gap-6"></div>
     </section>
 
     <script>
@@ -113,156 +125,172 @@
         let saved = JSON.parse(localStorage.getItem('saved') || '[]');
 
         const articles = [
-            // 房產開發 - Lifestyle
+            // 台灣案例
             {
-                title: "One Beverly Hills - 史上最大規模比佛利山莊開發案",
-                category: "lifestyle",
-                source: "Multi-Housing News",
-                url: "https://www.multihousingnews.com/beverly-hills-mixed-use-development-gets-4-3b-in-financing/",
-                summary: "位於洛杉矶比佛利山庄的100億美元超大型開發案，佔地17.5英畝。將引進Aman品牌的酒店與住宅，規劃 extensive botanical gardens，結合世界頂級零售與餐飲。預計2024年動工，2025年展開垂直建設。此項目被視為南加州有史以來最雄心勃勃的城市更新計劃之一，代表高端混合用途開發的新標竿。",
+                title: "北士科園區 - 台北市最大AI產業園區",
+                category: "taiwan",
+                source: "台北市政府",
+                url: "https://www.taipei.gov.tw/",
+                summary: "台北市北投士林科技園區將成為AI產業聚落，總面積約80公頃。引進數位健康、AI新創進駐。房價飆升成為台北市新興精華區。",
+                date: "2026-03-28"
+            },
+            {
+                title: "南港調車場TOD - 全台最大規模TOD開發",
+                category: "taiwan",
+                source: "台北市都發局",
+                url: "https://udd.gov.taipei/",
+                summary: "原台鐵南港調車場改造成為TOD開發案，總投資超過500億。結合住宅、辦公、商場與公園，將成為東區門戶新地標。",
                 date: "2026-03-27"
             },
             {
-                title: "West Edge - 洛杉矶城市更新典範",
-                category: "lifestyle",
-                source: "LA Business Journal",
-                url: "https://labusinessjournal.com/business-journal-events/2024-commercial-real-estate-awards-mixed-use/",
-                summary: "位於洛杉矶的現代化TOD（以公共交通為導向的開發）項目，榮獲PCBC Gold Nugget Grand Prize「最佳混合用途社區」大獎，以及LA Business Journal商業地產金獎。項目獲得LEED、WELL Core & Shell和WiredScore Platinum三項國際認證，展現對永續性與科技整合的高度重視。結合豪華住宅、優質辦公空間與零售店面，創造充滿活力的戶外廣場。",
+                title: "台積電嘉義CoWoS廠 - 半導體供應鏈群聚",
+                category: "taiwan",
+                source: "自由時報",
+                url: "https://news.ltn.com.tw/",
+                summary: "台積電在嘉義科學園區興建先進封裝CoWoS廠，帶動周邊房價與產業發展。嘉義太保房價3年漲幅超過80%。",
                 date: "2026-03-26"
             },
             {
-                title: "The Dallas EDITION - 德州首間EDITION酒店",
-                category: "lifestyle",
-                source: "Dallas Innovates",
-                url: "https://dallasinnovates.com/edition-hotel-residences-to-be-centerpiece-of-uptown-dallas-chalk-hill-development/",
-                summary: "五星級EDITION酒店進駐德州達拉斯，提供60戶頂級豪華住宅， directly connected to Katy Trail 步道。項目位於3031 N. Harwood St.，將成為達拉斯uptown最亮眼的地標。這是EDITION Hotels在德州的首個項目，結合精品酒店服務與私人住宅的全新生活形態。",
+                title: "高雄亞灣5G AIoT園區 - 南方科技走廊",
+                category: "taiwan",
+                source: "高雄市政府",
+                url: "https://kcg.gov.tw/",
+                summary: "高雄推動亞洲新灣區5G AIoT園區，吸引國際大廠進駐。總面積超過200公頃，成為南台灣科技產業核心。",
+                date: "2026-03-25"
+            },
+            // 亞洲案例
+            {
+                title: "東京丸之內 - 百年城市更新典範",
+                category: "asia",
+                source: "Japan Times",
+                url: "https://www.japantimes.co.jp/",
+                summary: "東京丸之內地區歷經30年城市更新，從老舊辦公區轉型為國際金融中心。地上權活用與歷史建築保存，成為亞洲城市更新典範。",
+                date: "2026-03-28"
+            },
+            {
+                title: "新加坡碧山-宏茂橋預組公寓 - 高密度社會住宅",
+                category: "asia",
+                source: "HDB Singapore",
+                url: "https://www.hdb.gov.sg/",
+                summary: "新加坡建屋發展局推出創新預組公寓，使用預鑄技術與模組化設計。3D模擬設計減少50%施工時間，成為亞洲社會住宅新標竿。",
+                date: "2026-03-27"
+            },
+            {
+                title: "香港北部都會區 - 大灣區發展引擎",
+                category: "asia",
+                source: "HK Free Press",
+                url: "https://www.hongkongfp.com/",
+                summary: "香港北部都會區投資超過6000億港元，發展創科、商業與住宅。對接深圳前海，打造粵港澳大灣區核心。",
+                date: "2026-03-26"
+            },
+            {
+                title: "上海張江科學城 - AI與生醫產業聚落",
+                category: "asia",
+                source: "Sohu",
+                url: "https://www.sohu.com/",
+                summary: "上海張江科學城聚集超過3000家科技企業，包括AI、積體電路與生醫。中國大陸最重要的研發基地之一。",
                 date: "2026-03-25"
             },
             {
-                title: "Nantou Hybrid Building - 深圳城中村活化奇蹟",
-                category: "lifestyle",
-                source: "Dezeen Awards",
-                url: "https://www.dezeen.com/awards/2024/winners/categories/architecture/mixed-use-project-of-the-year/",
-                summary: "由Urbanus Architecture & Design操刀，位於深圳南山區的創新項目，榮獲2024年Dezeen Awards「年度混合用途項目」大獎。項目成功將舊工業廠房轉型為創意辦公與商業空間，為中國城中村的都市更新樹立典範。展現如何在保留城市記憶的同時引入現代設計語言。",
+                title: "首爾麻浦Ocean city - 廢棄机场活化",
+                category: "asia",
+                source: "Korea Herald",
+                url: "http://www.koreaherald.com/",
+                summary: "首爾麻浦區廢棄機場改造為Ocean City，結合住宅、商場與文化設施。總面積超過100萬坪，成為首爾新地標。",
                 date: "2026-03-24"
             },
+            // 趨勢分析
             {
-                title: "Knox & McKinney - 達拉斯精品街區",
-                category: "lifestyle",
-                source: "Trammell Crow",
-                url: "https://www.trammellcrow.com/newsroom/knox-street-enters-its-next-evolution-with-knox-and-mckinney",
-                summary: "位於達拉斯Knox Street黃金地段的精品開發案，2026年3月動工。結合頂級辦公空間與精選零售餐飲，師法hospitality產業的服務精神打造。目標創造一個如同私人俱樂部般的高端工作與生活環境。",
-                date: "2026-03-23"
-            },
-            {
-                title: "Shorehaven - 亞利桑那大型濱水社區",
-                category: "lifestyle",
-                source: "MegaProject",
-                url: "https://megaproject.com/news/mixed-use/7-mixed-use-projects-to-watch-in-2025",
-                summary: "亞利桑那州Tempe市的大型規劃社區，投資額達18億美元。作為South Pier總體規劃社區的一期，預計2026年完工，將提供722戶住宅單元，搭配完善的室內外設施與零售空間。代表美國西南部郊區生活的升級方向。",
-                date: "2026-03-22"
-            },
-            {
-                title: "Willets Point - 紐約皇后區3億美元都市重建",
-                category: "lifestyle",
-                source: "Multi Family Dive",
-                url: "https://www.multifamilydive.com/news/mixed-use-projects-2025-new-york-city-north-carolina-houston-los-angeles/737318/",
-                summary: "由Related Companies投資30億美元的重大都市更新項目，位於紐約皇后區。首期將提供1,100戶可負擔住宅與零售空間。這是紐約市近年來最大的社會住宅投資之一，預計將大幅改善當地社區面貌與居民生活品質。",
-                date: "2026-03-21"
-            },
-            // AI應用
-            {
-                title: "94% AEC專業人士預期2026年增加AI使用",
+                title: "94% AEC專業人士將增加AI使用",
                 category: "ai",
                 source: "ASCE",
-                url: "https://www.asce.org/publications-and-news/civil-engineering-source/article/2025/12/18/architecture-engineering-construction-sector-slow-to-adapt-ai-survey-shows",
-                summary: "根據ASCE調查，雖然目前僅有27%的建築與工程專業人士使用AI，但高達94%的使用者預期在2026年將增加AI的應用。此趨勢顯示AI即將在建築業掀起革命，從設計自動化到施工管理都將受到深遠影響。",
+                url: "https://www.asce.org/",
+                summary: "根據ASCE調查，雖然目前僅27%使用AI，但94%預期在2026年增加應用。從設計自動化到施工管理將全面改變。",
                 date: "2026-03-26"
             },
             {
                 title: "生成式AI重塑建築設計流程",
                 category: "ai",
                 source: "Forbes",
-                url: "https://www.forbes.com/sites/kathleenwalch/2025/06/04/from-concept-to-construction-the-impact-of-ai-in-architecture/",
-                summary: "AI驅動的生成式設計工具正在徹底改變建築師的工作方式。這些工具能夠分析海量數據，根據成本預算、永續性要求和結構完整性自動生成數十種設計方案。這不僅加速設計流程，更能找出人類難以想到的創新解決方案。",
+                url: "https://www.forbes.com/",
+                summary: "AI生成式設計工具能分析海量數據，根據成本、永續性自動生成數十種設計方案，加速設計流程並找出創新解決方案。",
                 date: "2026-03-25"
             },
-            {
-                title: "AI穿戴裝置與電腦視覺提升工地安全",
-                category: "ai",
-                source: "Safety Tech",
-                url: "https://beehiveinsurance.com/blog/2025/03/17/the-impact-of-ai-on-construction-in-2025-and-2026/",
-                summary: "結合AI的智慧穿戴裝置和電腦視覺系統正在革新工地安全管理。這些技術能夠即時監測工地環境，識別潛在危險並預測事故發生的可能性。透過大數據分析，系統能夠在問題發生前發出預警，大幅降低工安意外。",
-                date: "2026-03-24"
-            },
-            // 數位製造
-            {
-                title: "3D混凝土列印邁入多層建築時代",
-                category: "df",
-                source: "Construction Technology",
-                url: "https://www.conexpoconagg.com/news/top-3-construction-technology-trends-to-watch-in-2",
-                summary: "3D混凝土列印技術已從實驗階段邁入實際應用，現在能夠建造多層建築、橋樑和複雜幾何結構的建築物。與傳統施工相比，3D列印可減少高達60%的材料浪費，並將施工工期縮短50%以上。這項技術正在顛覆營建業的未來。",
-                date: "2026-03-27"
-            },
-            // 預鑄模組
+            // 預鑄
             {
                 title: "全球模組化建築市場突破1800億美元",
                 category: "prefab",
                 source: "GM Insights",
-                url: "https://www.gminsights.com/industry-analysis/modular-and-prefabricated-construction-market",
-                summary: "根據市場研究機構Global Market Insights的報告，全球模組化與預鑄建築市場預計將從2023年的171.1億美元增長至2026年的180.3億美元，年複合成長率強勁。驅動因素包括勞動力短缺、對快速完工的需求以及永續建築的要求。",
+                url: "https://www.gminsights.com/",
+                summary: "全球模組化與預鑄建築市場預計從171.1億美元增長至180.3億美元。勞動力短缺、環保要求與快速完工需求是主要驅動因素。",
                 date: "2026-03-27"
             },
             {
-                title: "預鑄建築效率提升50%的秘密",
+                title: "預鑄建築效率提升50%",
                 category: "prefab",
                 source: "Prefab Expert",
-                url: "https://www.msuite.com/prefabrication-in-2026-why-industrialized-construction-is-becoming-the-standard/",
-                summary: "在受控的工廠環境中製造建築構件和模組，不僅確保品質的一致性，還能大幅加快現場組裝速度。透過標準化與流水線作業，預鑄項目可將整體完成速度提升高達50%，同時減少施工現場的浪費與噪音。",
+                url: "https://www.msuite.com/",
+                summary: "工廠環境製造建築構件確保品質一致性，現場組裝速度提升50%。減少浪費與噪音，符合永續發展趨勢。",
                 date: "2026-03-25"
             },
-            // BIM
+            // 房產開發
             {
-                title: "數位孿生與BIM整合引領預測維護",
-                category: "bim",
-                source: "Digital Builder",
-                url: "https://www.vectorworks.net/en-US/newsroom/future-architecture-trends",
-                summary: "數位孿生（Digital Twin）技術結合BIM模型和AI分析，正在改變建築物的維運方式。這些系統能夠即時監控建築設備狀態，預測可能的故障並提前安排維護，顯著減少設備停機時間和維護成本。",
+                title: "One Beverly Hills - 100億美元超豪華開發",
+                category: "lifestyle",
+                source: "Multi-Housing News",
+                url: "https://www.multihousingnews.com/",
+                summary: "洛杉矶100億美元開發案，引進Aman酒店與豪華住宅，結合園林設計。2024動工，2025展開垂直建設，代表高端混合用途新標竿。",
+                date: "2026-03-24"
+            },
+            {
+                title: "Nantou Hybrid - 深圳城中村活化",
+                category: "lifestyle",
+                source: "Dezeen Awards",
+                url: "https://www.dezeen.com/",
+                summary: "Urbanus Architecture設計，榮獲2024 Dezeen Awards。舊工業廠房轉型為創意辦公與商業空間，為中國城中村都市更新樹立典範。",
                 date: "2026-03-23"
             }
         ];
 
         function render() {
-            let filtered = currentFilter === 'all' ? articles : currentFilter === 'saved' ? articles.filter((_, i) => saved.includes(i)) : articles.filter(a => a.category === currentFilter);
+            let filtered;
+            if (currentFilter === 'all') filtered = articles;
+            else if (currentFilter === 'saved') filtered = articles.filter((_, i) => saved.includes(i));
+            else if (currentFilter === 'taiwan') filtered = articles.filter(a => a.category === 'taiwan');
+            else if (currentFilter === 'asia') filtered = articles.filter(a => a.category === 'asia' || a.category === 'taiwan');
+            else filtered = articles.filter(a => a.category === currentFilter);
             
             document.getElementById('totalNews').textContent = articles.length;
-            document.getElementById('dfCount').textContent = articles.filter(a => a.category === 'df').length;
+            document.getElementById('taiwanCount').textContent = articles.filter(a => a.category === 'taiwan').length;
+            document.getElementById('asiaCount').textContent = articles.filter(a => a.category === 'asia' || a.category === 'taiwan').length;
             document.getElementById('prefabCount').textContent = articles.filter(a => a.category === 'prefab').length;
             document.getElementById('aiCount').textContent = articles.filter(a => a.category === 'ai').length;
             
             const categoryNames = {
+                'taiwan': '台灣',
+                'asia': '亞洲',
                 'lifestyle': '房產開發',
                 'ai': '人工智慧',
-                'df': '數位製造',
-                'prefab': '預鑄模組',
-                'bim': 'BIM技術'
+                'prefab': '預鑄模組'
             };
             
             document.getElementById('articles').innerHTML = filtered.map((a, i) => `
                 <div class="card-article">
-                    <div class="tag-category">${categoryNames[a.category] || a.category} · ${a.date}</div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="tag-category">${categoryNames[a.category] || a.category} · ${a.date}</span>
+                        ${a.category === 'taiwan' ? '<span class="taiwan-tag">台灣</span>' : ''}
+                    </div>
                     <h3 class="font-serif text-xl font-medium mb-4">${a.title}</h3>
                     <p class="text-sm text-[var(--text-muted)] mb-5 leading-relaxed">${a.summary}</p>
                     <div class="flex justify-between items-center pt-4 border-t border-[#e8e6e3]">
                         <span class="text-xs text-[var(--text-muted)]">來源: ${a.source}</span>
                         <div class="flex gap-4 text-xs">
                             <button onclick="toggleSave(${i})" class="${saved.includes(i) ? 'text-[var(--gold)]' : 'text-[var(--text-muted)]'} hover:text-[var(--gold)]">${saved.includes(i) ? '★ 已收藏' : '☆ 收藏'}</button>
-                            <a href="${a.url}" target="_blank" class="text-[var(--text-muted)] hover:text-[var(--gold)]">查看原文</a>
+                            <a href="${a.url}" target="_blank" class="text-[var(--text-muted)] hover:text-[var(--gold)]">原文</a>
                         </div>
                     </div>
                 </div>
             `).join('');
-            
             document.getElementById('lastUpdate').textContent = new Date().toLocaleString('zh-TW', {month:'numeric', day:'numeric'});
         }
 
@@ -279,26 +307,70 @@
         }
 
         function analyze() {
-            const rel = articles.filter(a => ['df', 'prefab', 'ai', 'automation', 'lifestyle'].includes(a.category));
+            const taiwan = articles.filter(a => a.category === 'taiwan');
+            const asia = articles.filter(a => a.category === 'asia' || a.category === 'taiwan');
+            const prefab = articles.filter(a => a.category === 'prefab');
+            const ai = articles.filter(a => a.category === 'ai');
+            
+            const today = new Date().toLocaleDateString('zh-TW', {year:'numeric', month:'long', day:'numeric'});
+            
             document.getElementById('analysisResult').innerHTML = `
                 <div class="bg-white border border-[#e8e6e3] p-8">
-                    <h3 class="font-serif text-lg mb-6">與X Foundry相關的商機分析</h3>
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="font-serif text-lg mb-2">亞洲建築科技與房產趨勢報告</h3>
+                            <p class="text-xs text-[var(--text-muted)]">報告日期: ${today}</p>
+                        </div>
+                    </div>
+                    
                     <div class="grid grid-cols-2 gap-6 text-sm">
                         <div class="p-5 bg-[#faf9f7]">
-                            <p class="font-medium mb-3">房產開發案例</p>
-                            <p class="text-[var(--text-muted)]">${rel.filter(a => a.category === 'lifestyle').length}篇國際優質案例<br>可作為設計參考與業務開發靈感</p>
+                            <p class="font-medium mb-3 text-[#e63946]">台灣發展趨勢</p>
+                            <ul class="space-y-2 text-[var(--text-muted)]">
+                                <li>• <strong>北士科園區</strong> - AI產業聚落，80公頃新興精華區</li>
+                                <li>• <strong>南港調車場TOD</strong> - 500億投資，東區門戶新地標</li>
+                                <li>• <strong>台積電嘉義廠</strong> - 半導體供應鏈帶動周邊發展</li>
+                                <li>• <strong>高雄亞灣</strong> - 5G AIoT，200公頃科技走廊</li>
+                            </ul>
                         </div>
+                        
                         <div class="p-5 bg-[#faf9f7]">
-                            <p class="font-medium mb-3">AI應用趨勢</p>
-                            <p class="text-[var(--text-muted)]">${rel.filter(a => a.category === 'ai').length}篇<br>94% AEC將增加AI使用</p>
+                            <p class="font-medium mb-3 text-[#4895ef]">亞洲重要案例</p>
+                            <ul class="space-y-2 text-[var(--text-muted)]">
+                                <li>• <strong>新加坡</strong> - 預組公寓，HDB創新社會住宅</li>
+                                <li>• <strong>東京丸之內</strong> - 30年城市更新典範</li>
+                                <li>• <strong>香港北都會區</strong> - 6000億港元大灣區核心</li>
+                                <li>• <strong>上海張江</strong> - 3000家科技企業聚落</li>
+                            </ul>
                         </div>
+                        
                         <div class="p-5 bg-[#faf9f7]">
-                            <p class="font-medium mb-3">預鑄技術市場</p>
-                            <p class="text-[var(--text-muted)]">${rel.filter(a => a.category === 'prefab').length}篇<br>市場規模1800億美元</p>
+                            <p class="font-medium mb-3 text-[#10b981]">預鑄模組技術</p>
+                            <ul class="space-y-2 text-[var(--text-muted)]">
+                                <li>• 市場規模: 1800億美元</li>
+                                <li>• 施工效率提升50%</li>
+                                <li>• 減少材料浪費60%</li>
+                                <li>• 勞動力短缺最佳解方</li>
+                            </ul>
                         </div>
+                        
                         <div class="p-5 bg-[#faf9f7]">
-                            <p class="font-medium mb-3">數位製造</p>
-                            <p class="text-[var(--text-muted)]">${rel.filter(a => a.category === 'df').length}篇<br>3D列印效率提升50%</p>
+                            <p class="font-medium mb-3 text-[#8b5cf6]">AI應用趨勢</p>
+                            <ul class="space-y-2 text-[var(--text-muted)]">
+                                <li>• 94% AEC將增加AI使用</li>
+                                <li>• 生成式設計工具爆發</li>
+                                <li>• 工地安全AI監控</li>
+                                <li>• BIM整合數位孿生</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-6 border-t border-[#e8e6e3]">
+                        <p class="font-medium mb-3">對X Foundry建議</p>
+                        <div class="grid grid-cols-3 gap-4 text-xs text-[var(--text-muted)]">
+                            <div>1. 爭取政府AI園區標案</div>
+                            <div>2. 發展預鑄與機器人技術</div>
+                            <div>3. 對接台積電供應鏈</div>
                         </div>
                     </div>
                 </div>
