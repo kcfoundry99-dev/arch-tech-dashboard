@@ -67,7 +67,7 @@
         <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
             <div>
                 <h1 class="font-serif text-2xl font-medium">X Foundry</h1>
-                <p class="text-xs text-[var(--text-muted)] mt-1">亞洲建築科技與房產前沿</p>
+                <p class="text-xs text-[var(--text-muted)] mt-1">亞洲建築科技與房產前沿 · 每日更新</p>
             </div>
             <span class="text-xs text-[var(--text-muted)]" id="lastUpdate"></span>
         </div>
@@ -104,7 +104,7 @@
             <button onclick="filter('saved')" class="btn-filter" data-filter="saved">收藏</button>
             <button onclick="filter('taiwan')" class="btn-filter" data-filter="taiwan">台灣</button>
             <button onclick="filter('asia')" class="btn-filter" data-filter="asia">亞洲</button>
-            <button onclick="filter('lifestyle')" class="btn-filter" data-filter="lifestyle">房產開發</button>
+            <button onclick="filter('tech')" class="btn-filter" data-filter="tech">科技趨勢</button>
             <button onclick="filter('ai')" class="btn-filter" data-filter="ai">AI應用</button>
             <button onclick="filter('prefab')" class="btn-filter" data-filter="prefab">預鑄模組</button>
         </div>
@@ -125,130 +125,113 @@
         let saved = JSON.parse(localStorage.getItem('saved') || '[]');
 
         const articles = [
-            // 台灣案例
+            // ===== 2026年3月 最新趨勢 =====
             {
-                title: "北士科園區 - 台北市最大AI產業園區",
-                category: "taiwan",
-                source: "台北市政府",
-                url: "https://www.taipei.gov.tw/",
-                summary: "台北市北投士林科技園區將成為AI產業聚落，總面積約80公頃。引進數位健康、AI新創進駐。房價飆升成為台北市新興精華區。",
+                title: "AI從試點邁向量產：2026建築業全面變革",
+                category: "tech",
+                source: "Re-Thinking The Future",
+                url: "https://www.re-thinkingthefuture.com/technologies/how-technology-will-transform-architecture-in-2026/",
+                summary: "2026年AI不再只是試點項目，而是全面進入建築業各環節。從初期設計探索、規劃到預測分析，AI正在改變遊戲規則。透過分析分區法規和環境數據，AI能夠準確繪製項目約束條件，大幅減少猜測工作。",
+                date: "2026-03-30"
+            },
+            {
+                title: "Agentic AI：自主思考的建築設計系統",
+                category: "ai",
+                source: "Modern Construction News",
+                url: "https://modernconstructionnews.com/news/construction-technology-trends-shaping-2026-innovations/",
+                summary: "新一代Agentic AI系統能夠自主執行目標導向的行動，涵蓋設計優化、材料效率、環境影響模擬、進度排程、衝突檢測與資源管理。這代表AI不再只是工具，而是能夠獨立完成複雜任務的「數位建築師」。",
+                date: "2026-03-29"
+            },
+            {
+                title: "數位孿生技術即時監控施工",
+                category: "tech",
+                source: "A-Site",
+                url: "https://www.asite.com/blogs/top-3-construction-technology-trends-to-watch-in-2026-what-they-mean-for-your-projects",
+                summary: "數位孿生結合智慧多維數位模型，即時監控施工流程、模擬設計選擇、預測營運問題並分析空間使用以改善規劃與能源效率。 Reality Capture技術（無人機、360相機、LiDAR、IoT感測器）持續更新數位孿生，反映項目即時狀態。",
                 date: "2026-03-28"
             },
             {
-                title: "南港調車場TOD - 全台最大規模TOD開發",
-                category: "taiwan",
-                source: "台北市都發局",
-                url: "https://udd.gov.taipei/",
-                summary: "原台鐵南港調車場改造成為TOD開發案，總投資超過500億。結合住宅、辦公、商場與公園，將成為東區門戶新地標。",
+                title: "VR/AR將成施工標準工具",
+                category: "tech",
+                source: "Intellectsoft",
+                url: "https://www.intellectsoft.net/blog/construction-technology-trends/",
+                summary: "新一代VR/AR工具正在改變建築師傳達想法的方式。業主可以在施工前幾個月就體驗到真實比例的項目，進行即時導覽，提前對照明、材料和配置問題提供反饋。VR將成為施工前規劃的標準工具。",
                 date: "2026-03-27"
             },
+            // ===== 台灣重大發展 =====
             {
-                title: "台積電嘉義CoWoS廠 - 半導體供應鏈群聚",
+                title: "AI EXPO Taiwan 2026 - 5萬人參與",
                 category: "taiwan",
-                source: "自由時報",
-                url: "https://news.ltn.com.tw/",
-                summary: "台積電在嘉義科學園區興建先進封裝CoWoS廠，帶動周邊房價與產業發展。嘉義太保房價3年漲幅超過80%。",
-                date: "2026-03-26"
-            },
-            {
-                title: "高雄亞灣5G AIoT園區 - 南方科技走廊",
-                category: "taiwan",
-                source: "高雄市政府",
-                url: "https://kcg.gov.tw/",
-                summary: "高雄推動亞洲新灣區5G AIoT園區，吸引國際大廠進駐。總面積超過200公頃，成為南台灣科技產業核心。",
+                source: "風傳媒",
+                url: "https://www.storm.mg/article/11096858",
+                summary: "2026年3月25-27日於圓山花博爭艷館舉辦，匯聚全球超過250家科技巨擘與100個跨域生態鏈夥伴，吸引逾5萬名產業決策者參與。副總統蕭美琴親臨見證「AI新十大建設」國家級發展藍圖。",
                 date: "2026-03-25"
             },
-            // 亞洲案例
             {
-                title: "東京丸之內 - 百年城市更新典範",
+                title: "AI新十大建設 - 2040年前投入千億",
+                category: "taiwan",
+                source: "SETN",
+                url: "https://inews.setn.com/news/1812773",
+                summary: "台灣政府正式啟動「AI新十大建設」國家戰略，預計2040年前投入超過1000億元，培植50萬人才，創造15兆元產值。打造智慧生活圈，讓AI在食衣住行育樂各領域扮演關鍵角色。",
+                date: "2026-03-25"
+            },
+            {
+                title: "臺灣建築模組化聯盟成立",
+                category: "taiwan",
+                source: "UDN",
+                url: "https://money.udn.com/money/story/7307/9251269",
+                summary: "「臺灣建築模組化聯盟」與「臺灣智慧營造與數位轉型推廣聯盟」於2026年1月成立，旨在解決營建產業缺工、職安、工期延宕與品質不穩問題。透過標準化與工廠預製，縮短工期、提升品質。",
+                date: "2026-01-06"
+            },
+            {
+                title: "Techman Robot推出TM Xplore I人形機器人",
+                category: "taiwan",
+                source: "Taiwan News",
+                url: "https://www.taiwannews.com.tw/news/6221237",
+                summary: "台灣Techman Robot與NVIDIA合作開發人形機器人TM Xplore I，配备Nvidia Jetson Orin平台進行AI推理與邊緣運算。預計2026年下半年量產，代表台灣在工業機器人領域的重大突破。",
+                date: "2026-03-24"
+            },
+            // ===== 亞洲案例 =====
+            {
+                title: "新加坡HDB推動預鑄組裝住宅",
+                category: "asia",
+                source: "HDB Singapore",
+                url: "https://www.hdb.gov.sg/",
+                summary: "新加坡建屋發展局持續推動創新預組公寓，使用預鑄技術與模組化設計。3D模擬設計減少50%施工時間，成為亞洲社會住宅新標竿。",
+                date: "2026-03-23"
+            },
+            {
+                title: "東京丸之內城市更新30年典範",
                 category: "asia",
                 source: "Japan Times",
                 url: "https://www.japantimes.co.jp/",
                 summary: "東京丸之內地區歷經30年城市更新，從老舊辦公區轉型為國際金融中心。地上權活用與歷史建築保存，成為亞洲城市更新典範。",
-                date: "2026-03-28"
+                date: "2026-03-22"
             },
             {
-                title: "新加坡碧山-宏茂橋預組公寓 - 高密度社會住宅",
-                category: "asia",
-                source: "HDB Singapore",
-                url: "https://www.hdb.gov.sg/",
-                summary: "新加坡建屋發展局推出創新預組公寓，使用預鑄技術與模組化設計。3D模擬設計減少50%施工時間，成為亞洲社會住宅新標竿。",
-                date: "2026-03-27"
-            },
-            {
-                title: "香港北部都會區 - 大灣區發展引擎",
+                title: "香港北部都會區6000億港元發展",
                 category: "asia",
                 source: "HK Free Press",
                 url: "https://www.hongkongfp.com/",
                 summary: "香港北部都會區投資超過6000億港元，發展創科、商業與住宅。對接深圳前海，打造粵港澳大灣區核心。",
-                date: "2026-03-26"
+                date: "2026-03-21"
             },
-            {
-                title: "上海張江科學城 - AI與生醫產業聚落",
-                category: "asia",
-                source: "Sohu",
-                url: "https://www.sohu.com/",
-                summary: "上海張江科學城聚集超過3000家科技企業，包括AI、積體電路與生醫。中國大陸最重要的研發基地之一。",
-                date: "2026-03-25"
-            },
-            {
-                title: "首爾麻浦Ocean city - 廢棄机场活化",
-                category: "asia",
-                source: "Korea Herald",
-                url: "http://www.koreaherald.com/",
-                summary: "首爾麻浦區廢棄機場改造為Ocean City，結合住宅、商場與文化設施。總面積超過100萬坪，成為首爾新地標。",
-                date: "2026-03-24"
-            },
-            // 趨勢分析
-            {
-                title: "94% AEC專業人士將增加AI使用",
-                category: "ai",
-                source: "ASCE",
-                url: "https://www.asce.org/",
-                summary: "根據ASCE調查，雖然目前僅27%使用AI，但94%預期在2026年增加應用。從設計自動化到施工管理將全面改變。",
-                date: "2026-03-26"
-            },
-            {
-                title: "生成式AI重塑建築設計流程",
-                category: "ai",
-                source: "Forbes",
-                url: "https://www.forbes.com/",
-                summary: "AI生成式設計工具能分析海量數據，根據成本、永續性自動生成數十種設計方案，加速設計流程並找出創新解決方案。",
-                date: "2026-03-25"
-            },
-            // 預鑄
+            // ===== 預鑄技術 =====
             {
                 title: "全球模組化建築市場突破1800億美元",
                 category: "prefab",
                 source: "GM Insights",
-                url: "https://www.gminsights.com/",
+                url: "https://www.gminsights.com/industry-analysis/modular-and-prefabricated-construction-market",
                 summary: "全球模組化與預鑄建築市場預計從171.1億美元增長至180.3億美元。勞動力短缺、環保要求與快速完工需求是主要驅動因素。",
-                date: "2026-03-27"
+                date: "2026-03-20"
             },
             {
-                title: "預鑄建築效率提升50%",
-                category: "prefab",
-                source: "Prefab Expert",
-                url: "https://www.msuite.com/",
-                summary: "工廠環境製造建築構件確保品質一致性，現場組裝速度提升50%。減少浪費與噪音，符合永續發展趨勢。",
-                date: "2026-03-25"
-            },
-            // 房產開發
-            {
-                title: "One Beverly Hills - 100億美元超豪華開發",
-                category: "lifestyle",
-                source: "Multi-Housing News",
-                url: "https://www.multihousingnews.com/",
-                summary: "洛杉矶100億美元開發案，引進Aman酒店與豪華住宅，結合園林設計。2024動工，2025展開垂直建設，代表高端混合用途新標竿。",
-                date: "2026-03-24"
-            },
-            {
-                title: "Nantou Hybrid - 深圳城中村活化",
-                category: "lifestyle",
-                source: "Dezeen Awards",
-                url: "https://www.dezeen.com/",
-                summary: "Urbanus Architecture設計，榮獲2024 Dezeen Awards。舊工業廠房轉型為創意辦公與商業空間，為中國城中村都市更新樹立典範。",
-                date: "2026-03-23"
+                title: "AI結合BIM自動化檢測",
+                category: "ai",
+                source: "ASCE",
+                url: "https://www.asce.org/",
+                summary: "AI正在增強工地安全監控，並透過比較3D掃描與BIM模型自動檢測偏差，實現自動化品質控制。這項技術可大幅減少人為錯誤與施工缺陷。",
+                date: "2026-03-19"
             }
         ];
 
@@ -269,7 +252,7 @@
             const categoryNames = {
                 'taiwan': '台灣',
                 'asia': '亞洲',
-                'lifestyle': '房產開發',
+                'tech': '科技趨勢',
                 'ai': '人工智慧',
                 'prefab': '預鑄模組'
             };
@@ -311,6 +294,7 @@
             const asia = articles.filter(a => a.category === 'asia' || a.category === 'taiwan');
             const prefab = articles.filter(a => a.category === 'prefab');
             const ai = articles.filter(a => a.category === 'ai');
+            const tech = articles.filter(a => a.category === 'tech');
             
             const today = new Date().toLocaleDateString('zh-TW', {year:'numeric', month:'long', day:'numeric'});
             
@@ -318,59 +302,50 @@
                 <div class="bg-white border border-[#e8e6e3] p-8">
                     <div class="flex justify-between items-start mb-6">
                         <div>
-                            <h3 class="font-serif text-lg mb-2">亞洲建築科技與房產趨勢報告</h3>
+                            <h3 class="font-serif text-lg mb-2">建築科技趨勢報告</h3>
                             <p class="text-xs text-[var(--text-muted)]">報告日期: ${today}</p>
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-2 gap-6 text-sm">
                         <div class="p-5 bg-[#faf9f7]">
-                            <p class="font-medium mb-3 text-[#e63946]">台灣發展趨勢</p>
+                            <p class="font-medium mb-3 text-[#e63946]">台灣重大發展</p>
                             <ul class="space-y-2 text-[var(--text-muted)]">
-                                <li>• <strong>北士科園區</strong> - AI產業聚落，80公頃新興精華區</li>
-                                <li>• <strong>南港調車場TOD</strong> - 500億投資，東區門戶新地標</li>
-                                <li>• <strong>台積電嘉義廠</strong> - 半導體供應鏈帶動周邊發展</li>
-                                <li>• <strong>高雄亞灣</strong> - 5G AIoT，200公頃科技走廊</li>
+                                <li>• <strong>AI新十大建設</strong> - 2040年前千億投資</li>
+                                <li>• <strong>建築模組化聯盟</strong> - 解決缺工與品質問題</li>
+                                <li>• <strong>Techman人形機器人</strong> - NVIDIA合作下半年量產</li>
+                                <li>• <strong>AI EXPO 2026</strong> - 5萬人參與</li>
                             </ul>
                         </div>
                         
                         <div class="p-5 bg-[#faf9f7]">
-                            <p class="font-medium mb-3 text-[#4895ef]">亞洲重要案例</p>
+                            <p class="font-medium mb-3 text-[#8b5cf6]">國際科技趨勢</p>
                             <ul class="space-y-2 text-[var(--text-muted)]">
-                                <li>• <strong>新加坡</strong> - 預組公寓，HDB創新社會住宅</li>
-                                <li>• <strong>東京丸之內</strong> - 30年城市更新典範</li>
-                                <li>• <strong>香港北都會區</strong> - 6000億港元大灣區核心</li>
-                                <li>• <strong>上海張江</strong> - 3000家科技企業聚落</li>
+                                <li>• <strong>Agentic AI</strong> - 自主設計與優化</li>
+                                <li>• <strong>數位孿生</strong> - 即時監控施工</li>
+                                <li>• <strong>VR/AR</strong> - 將成標準工具</li>
+                                <li>• <strong>BIM+AI</strong> - 自動化檢測</li>
                             </ul>
                         </div>
                         
                         <div class="p-5 bg-[#faf9f7]">
-                            <p class="font-medium mb-3 text-[#10b981]">預鑄模組技術</p>
+                            <p class="font-medium mb-3 text-[#10b981]">預鑄模組市場</p>
                             <ul class="space-y-2 text-[var(--text-muted)]">
                                 <li>• 市場規模: 1800億美元</li>
                                 <li>• 施工效率提升50%</li>
                                 <li>• 減少材料浪費60%</li>
-                                <li>• 勞動力短缺最佳解方</li>
+                                <li>• 勞動力短缺解方</li>
                             </ul>
                         </div>
                         
                         <div class="p-5 bg-[#faf9f7]">
-                            <p class="font-medium mb-3 text-[#8b5cf6]">AI應用趨勢</p>
+                            <p class="font-medium mb-3 text-[#4895ef]">對X Foundry建議</p>
                             <ul class="space-y-2 text-[var(--text-muted)]">
-                                <li>• 94% AEC將增加AI使用</li>
-                                <li>• 生成式設計工具爆發</li>
-                                <li>• 工地安全AI監控</li>
-                                <li>• BIM整合數位孿生</li>
+                                <li>1. 對接政府AI新十大建設</li>
+                                <li>2. 與Techman等機器人廠合作</li>
+                                <li>3. 發展預鑄與數位孿生技術</li>
+                                <li>4. 爭取智慧工地標案</li>
                             </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-6 pt-6 border-t border-[#e8e6e3]">
-                        <p class="font-medium mb-3">對X Foundry建議</p>
-                        <div class="grid grid-cols-3 gap-4 text-xs text-[var(--text-muted)]">
-                            <div>1. 爭取政府AI園區標案</div>
-                            <div>2. 發展預鑄與機器人技術</div>
-                            <div>3. 對接台積電供應鏈</div>
                         </div>
                     </div>
                 </div>
