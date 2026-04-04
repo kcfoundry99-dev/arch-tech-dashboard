@@ -125,6 +125,15 @@
         let saved = JSON.parse(localStorage.getItem('saved') || '[]');
 
         const articles = [
+            // ===== 最新案例 =====
+            {
+                title: "ROMM Convent - 曼谷Silom CBD靜心豪宅",
+                category: "lifestyle",
+                source: "Upper Estates",
+                url: "https://upperestates.com/zh/blog/romm-convent-where-true-rarity-lies-at-the-heart-of-silom/",
+                summary: "32層175戶高端住宅，位於曼谷Convent Road核心。BNH Hospital就在10公尺外。建築採用Sky Villa熱帶木構概念，30-32樓為天空靜居層（泳池、健身房、冥想艙、溫泉）。PIA Interior操刀Biological Design，停車位比例113%多於戶數。康文道過去十年高端案極少，土地稀缺。",
+                date: "2026-04-04"
+            },
             // ===== 2026年3月 最新趨勢 =====
             {
                 title: "AI從試點邁向量產：2026建築業全面變革",
@@ -252,6 +261,7 @@
             const categoryNames = {
                 'taiwan': '台灣',
                 'asia': '亞洲',
+                'lifestyle': '房產個案',
                 'tech': '科技趨勢',
                 'ai': '人工智慧',
                 'prefab': '預鑄模組'
